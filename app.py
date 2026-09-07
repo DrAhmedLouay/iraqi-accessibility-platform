@@ -40,9 +40,11 @@ st.markdown("""
 # Sidebar with platform information, credits, and document downloads
 current_dir = os.path.dirname(os.path.abspath(__file__))
 with st.sidebar:
-    logo_path = os.path.join(current_dir, "platform_logo.jpg")
+    logo_path = os.path.join(current_dir, "platform_logo.png")
+    if not os.path.exists(logo_path):
+        logo_path = os.path.join(current_dir, "platform_logo.jpg")
     if os.path.exists(logo_path):
-        st.image(logo_path, width=140)
+        st.image(logo_path, width=150)
     else:
         st.image("https://upload.wikimedia.org/wikipedia/commons/f/f6/Coat_of_arms_of_Iraq_%282008%E2%80%93present%29.svg", width=90)
     st.markdown("### 🏛️ جمهورية العراق")
