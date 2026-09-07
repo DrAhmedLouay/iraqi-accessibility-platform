@@ -6,6 +6,7 @@
   <link rel="icon" type="image/png" href="platform_logo.png">
   <title>المنصة الوطنية للوصول الشامل والبيئة العمرانية الدامجة | جمهورية العراق</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     /* High Contrast Accessibility Mode */
     body.high-contrast {
@@ -1269,6 +1270,7 @@
     </section>
 
     <!-- TAB: AI ARCHITECTURAL PLAN CHECKER & VISION AUDIT -->
+    <!-- TAB: AI ARCHITECTURAL PLAN CHECKER & VISION AUDIT -->
     <section id="tab-ai-audit" class="tab-content hidden space-y-6">
       <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
         <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-5 flex justify-between items-center flex-wrap gap-2">
@@ -1276,9 +1278,9 @@
             <div class="flex items-center gap-2">
               <span class="text-xl">🤖</span>
               <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-slate-100">المدقق الذكي للمخططات المعمارية (AI Architectural Plan Checker)</h2>
-              <span class="text-[10px] bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 font-bold px-2 py-0.5 rounded-full border border-purple-300">يدعم ملفات PDF والمخططات الهندسية</span>
+              <span class="text-[10px] bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 font-bold px-2 py-0.5 rounded-full border border-purple-300">عرض المخطط المرفوع والتأشيرات الحية</span>
             </div>
-            <p class="text-xs text-slate-500 mt-0.5">فحص المخططات المعمارية بصيغة PDF أو CAD أو صور المساقط عبر خوارزميات التدقيق الهندسي لاكتشاف المخالفات ووضع التأشيرات التصميمية (Redlines).</p>
+            <p class="text-xs text-slate-500 mt-0.5">فحص المخططات المعمارية بصيغة PDF أو CAD أو صور المساقط، وإظهار المخطط المرفوع مباشرة داخل اللوحة مع التأشيرات الهندسية (Redlines).</p>
           </div>
           <div class="flex items-center gap-2">
             <span class="text-xs text-slate-500 font-semibold">تحميل عينة سريعة:</span>
@@ -1295,8 +1297,8 @@
               <div id="plan-dropzone" class="border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-xl p-4 text-center hover:border-purple-500 hover:bg-purple-50/30 transition cursor-pointer bg-white dark:bg-slate-800" onclick="document.getElementById('plan-file-input').click()">
                 <div class="text-3xl mb-1">📑</div>
                 <div class="font-bold text-slate-800 dark:text-slate-200">انقر لاختيار ملف أو اسحب المخطط هنا</div>
-                <div class="text-[11px] text-purple-700 dark:text-purple-300 font-semibold mt-1">يدعم: PDF, DWG, DXF, PNG, JPG</div>
-                <div class="text-[10px] text-slate-400 mt-1">يتم التحليل داخلياً بأمان تام دون نقل المخططات خارج متصفحك</div>
+                <div class="text-[11px] text-purple-700 dark:text-purple-300 font-semibold mt-1">يتم عرض المخطط وفحصه فوراً في اللوحة</div>
+                <div class="text-[10px] text-slate-400 mt-1">يدعم: PDF, DWG, DXF, PNG, JPG (معالجة محلية آمنة 100%)</div>
                 <input type="file" id="plan-file-input" class="hidden" accept=".pdf,application/pdf,image/*,.png,.jpg,.jpeg,.dxf,.dwg" onchange="handlePlanUpload(event)">
               </div>
 
@@ -1309,7 +1311,7 @@
                     <div id="uploaded-file-size" class="text-[10px] text-slate-400">1.2 MB</div>
                   </div>
                 </div>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full whitespace-nowrap">جاهز للتحليل</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full whitespace-nowrap">معروض في اللوحة</span>
               </div>
             </div>
 
@@ -1330,100 +1332,150 @@
             <!-- Offline PWA Banner -->
             <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-[11px] text-emerald-900 dark:text-emerald-200">
               <span class="font-bold">📱 جاهز للعمل الميداني بدون إنترنت (Offline Ready):</span>
-              <p class="mt-0.5 text-slate-600 dark:text-slate-300">يمكن لمهندسي التفتيش في البلديات استخدام أداة التدقيق في المواقع الإنشائية مع حفظ السجلات في ذاكرة المتصفح.</p>
+              <p class="mt-0.5 text-slate-600 dark:text-slate-300">يمكن لمهندسي التفتيش في البلديات فحص المخططات في الموقع الإنشائي وعرض التأشيرات المعمارية مباشرة.</p>
             </div>
           </div>
 
           <!-- Canvas Preview with Interactive Redlines -->
           <div class="lg:col-span-8 space-y-4">
-            <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800">
+            <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800 shadow-xl">
+              
+              <!-- Header Bar with Title & Status -->
               <div class="flex justify-between items-center text-xs text-slate-400 mb-2 flex-wrap gap-2">
-                <span class="font-bold text-slate-200">لوحة المخطط المعماري وتأشيرات الكود (Redlines & Violations):</span>
                 <div class="flex items-center gap-2">
-                  <div id="ai-view-switch" class="hidden items-center bg-slate-900 rounded-lg p-0.5 border border-slate-800 text-[11px]">
-                    <button onclick="switchAIView('blueprint')" id="btn-view-blueprint" class="px-2 py-0.5 rounded bg-purple-600 text-white font-bold transition">التأشيرات المعمارية</button>
-                    <button onclick="switchAIView('original')" id="btn-view-original" class="px-2 py-0.5 rounded text-slate-400 hover:text-white transition">المخطط المرفوع</button>
+                  <span class="font-bold text-slate-200">لوحة المخطط المعماري وتأشيرات الكود (Redlines & Violations):</span>
+                  <span id="ai-scan-status-badge" class="text-purple-400 font-bold bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-800 text-[10px]">جاهز للفحص</span>
+                </div>
+                
+                <!-- Viewport Controls (Zoom, Filter, Pages) -->
+                <div class="flex items-center gap-2 flex-wrap">
+                  <!-- Filter Switcher -->
+                  <div class="flex items-center bg-slate-900 rounded-lg p-0.5 border border-slate-800 text-[10px]">
+                    <button onclick="setPlanFilter('blueprint')" id="btn-filter-blueprint" class="px-2 py-0.5 rounded bg-purple-600 text-white font-bold transition" title="عرض بنمط كود أزرق داكن عالي التباين">مخطط أزرق</button>
+                    <button onclick="setPlanFilter('original')" id="btn-filter-original" class="px-2 py-0.5 rounded text-slate-400 hover:text-white transition" title="عرض بالألوان الأصلية للملف">طبيعي</button>
+                    <button onclick="setPlanFilter('mono')" id="btn-filter-mono" class="px-2 py-0.5 rounded text-slate-400 hover:text-white transition" title="عرض أبيض وأسود عالي التباين">رمادي</button>
                   </div>
-                  <span id="ai-scan-status-badge" class="text-purple-400 font-bold">جاهز للفحص</span>
+
+                  <!-- Zoom Tools -->
+                  <div class="flex items-center bg-slate-900 rounded-lg p-0.5 border border-slate-800 text-[11px] gap-1">
+                    <button onclick="zoomPlan(-0.15)" class="px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded transition font-bold" title="تصغير">-</button>
+                    <span id="ai-zoom-val" class="text-[10px] text-purple-300 font-bold min-w-[32px] text-center">100%</span>
+                    <button onclick="zoomPlan(0.15)" class="px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded transition font-bold" title="تكبير">+</button>
+                    <button onclick="zoomPlan(0)" class="px-1.5 py-0.5 hover:bg-slate-800 text-slate-400 rounded transition text-[10px]" title="إعادة ضبط">⟲</button>
+                  </div>
+
+                  <!-- PDF Page Navigator (Multi-page PDFs) -->
+                  <div id="ai-pdf-pagenav" class="hidden items-center bg-slate-900 rounded-lg p-0.5 border border-slate-800 text-[10px] gap-1">
+                    <button onclick="changePdfPage(-1)" class="px-1.5 py-0.5 hover:bg-slate-800 text-slate-300 rounded transition font-bold">◀</button>
+                    <span id="ai-page-label" class="text-slate-300 px-1 font-bold">صفحة 1 من 1</span>
+                    <button onclick="changePdfPage(1)" class="px-1.5 py-0.5 hover:bg-slate-800 text-slate-300 rounded transition font-bold">▶</button>
+                  </div>
                 </div>
               </div>
-              <div class="w-full bg-slate-900 rounded-xl p-2 min-h-[300px] flex items-center justify-center relative overflow-hidden border border-slate-800" id="ai-canvas-wrapper">
+
+              <!-- Main Canvas Viewport -->
+              <div class="w-full bg-slate-900 rounded-xl p-2 min-h-[360px] flex items-center justify-center relative overflow-hidden border border-slate-800" id="ai-canvas-wrapper">
                 
                 <!-- Laser Scanning Effect -->
-                <div id="ai-scan-laser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#22d3ee] pointer-events-none z-20 transition-all duration-300"></div>
+                <div id="ai-scan-laser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_18px_#22d3ee] pointer-events-none z-30 transition-all duration-300"></div>
 
-                <!-- 1. Blueprint Vector SVG View -->
-                <svg id="ai-plan-svg" viewBox="0 0 540 300" class="w-full h-72">
-                  <!-- Blueprint Grid Background -->
-                  <defs>
-                    <pattern id="blueprint-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5"/>
-                    </pattern>
-                  </defs>
-                  <rect width="540" height="300" fill="#0f172a"/>
-                  <rect width="540" height="300" fill="url(#blueprint-grid)"/>
-
-                  <!-- Architectural Floorplan Outline -->
-                  <rect x="40" y="30" width="460" height="240" fill="none" stroke="#38bdf8" stroke-width="3" rx="4"/>
-                  <text id="ai-svg-title" x="270" y="25" fill="#38bdf8" font-size="10" text-anchor="middle" font-weight="bold">مسقط معماري: الطابق الأرضي للمبنى الحكومي النموذجي</text>
-
-                  <!-- Internal Partition Walls -->
-                  <line x1="40" y1="150" x2="260" y2="150" stroke="#475569" stroke-width="2.5"/>
-                  <line x1="260" y1="30" x2="260" y2="270" stroke="#475569" stroke-width="2.5"/>
-                  <line x1="380" y1="30" x2="380" y2="150" stroke="#475569" stroke-width="2.5"/>
-
-                  <!-- Room Labels -->
-                  <text x="150" y="90" fill="#64748b" font-size="10" text-anchor="middle">قاعة خدمة المواطنين</text>
-                  <text x="150" y="210" fill="#64748b" font-size="10" text-anchor="middle">دورة مياه الزوار</text>
-                  <text x="320" y="90" fill="#64748b" font-size="10" text-anchor="middle">بهو المصاعد</text>
-                  <text x="440" y="90" fill="#64748b" font-size="10" text-anchor="middle">المكاتب الإدارية</text>
-                  <text x="380" y="210" fill="#64748b" font-size="10" text-anchor="middle">المدخل الرئيسي والمنحدر</text>
-
-                  <!-- Main Entrance Door (at bottom) -->
-                  <line x1="340" y1="270" x2="420" y2="270" stroke="#22c55e" stroke-width="5"/>
-                  <text x="380" y="285" fill="#22c55e" font-size="8.5" text-anchor="middle" font-weight="bold">المدخل</text>
-
-                  <!-- DYNAMIC REDLINES & ANNOTATIONS (Injected/Toggled via JS) -->
-                  <g id="ai-redlines-group">
-                    <!-- Redline 1: Threshold Violation -->
-                    <circle cx="380" cy="270" r="14" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="3"/>
-                    <line x1="395" y1="270" x2="440" y2="250" stroke="#ef4444" stroke-width="1.5"/>
-                    <rect x="440" y="240" width="90" height="24" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
-                    <text x="485" y="255" fill="#fecaca" font-size="7.5" text-anchor="middle" font-weight="bold">عتبة 4.5 سم (مخالفة م.ب.ع 202)</text>
-
-                    <!-- Redline 2: Narrow Restroom Door -->
-                    <circle cx="260" cy="200" r="14" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="3"/>
-                    <line x1="260" y1="186" x2="220" y2="165" stroke="#ef4444" stroke-width="1.5"/>
-                    <rect x="140" y="153" width="80" height="24" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
-                    <text x="180" y="168" fill="#fecaca" font-size="7.5" text-anchor="middle" font-weight="bold">باب 78 سم (المطلوب ≥90)</text>
-
-                    <!-- Redline 3: Compliant Ramp -->
-                    <circle cx="340" cy="230" r="12" fill="none" stroke="#10b981" stroke-width="2"/>
-                    <line x1="330" y1="220" x2="290" y2="210" stroke="#10b981" stroke-width="1.5"/>
-                    <rect x="210" y="200" width="80" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
-                    <text x="250" y="214" fill="#a7f3d0" font-size="7.5" text-anchor="middle" font-weight="bold">منحدر مطابق (1:14)</text>
-
-                    <!-- Redline 4: Elevator Turning Space -->
-                    <circle cx="320" cy="70" r="12" fill="none" stroke="#10b981" stroke-width="2"/>
-                    <line x1="332" y1="70" x2="355" y2="60" stroke="#10b981" stroke-width="1.5"/>
-                    <rect x="355" y="50" width="85" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
-                    <text x="397" y="64" fill="#a7f3d0" font-size="7.5" text-anchor="middle" font-weight="bold">كابينة 1.4×1.4م مطابقة</text>
-                  </g>
-                </svg>
-
-                <!-- 2. Original Uploaded File Preview Container (PDF / Image) -->
-                <div id="ai-original-preview" class="hidden w-full h-72 flex flex-col items-center justify-center bg-slate-900 rounded-xl overflow-hidden relative p-1">
-                  <object id="ai-pdf-object" data="" type="application/pdf" class="w-full h-full rounded-lg" style="display:none;">
-                    <div class="p-6 text-center text-slate-400 space-y-2">
-                      <div class="text-4xl">📄</div>
-                      <div class="font-bold text-slate-200 text-sm" id="ai-pdf-fallback-name">مستند معماري PDF</div>
-                      <p class="text-xs max-w-sm mx-auto">تم تحميل وتدقيق ملف الـ PDF بنجاح عبر خوارزميات التدقيق الهندسي.</p>
-                      <a id="ai-pdf-external-link" href="#" target="_blank" class="inline-block px-3.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition shadow">فتح ملف PDF في نافذة مستقلة ↗</a>
-                    </div>
-                  </object>
-                  <img id="ai-image-preview" src="" class="max-h-full max-w-full object-contain mx-auto rounded-lg" style="display:none;">
+                <!-- Loading Spinner for PDF.js / Rendering -->
+                <div id="ai-plan-loading" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center gap-2">
+                  <div class="w-8 h-8 border-3 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+                  <div id="ai-loading-text" class="text-xs font-bold text-purple-300">جاري معالجة المخطط المعماري وعرضه في اللوحة...</div>
                 </div>
 
+                <!-- Scalable Plan Viewport Layer -->
+                <div id="ai-plan-layer" class="relative w-full h-full flex items-center justify-center transition-transform duration-150 origin-center">
+                  
+                  <!-- 1. Default Sample Vector Blueprint (Displayed for sample buttons) -->
+                  <svg id="ai-sample-svg" viewBox="0 0 540 300" class="w-full max-h-[350px]">
+                    <!-- Blueprint Grid Background -->
+                    <defs>
+                      <pattern id="blueprint-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+                      </pattern>
+                    </defs>
+                    <rect width="540" height="300" fill="#0f172a"/>
+                    <rect width="540" height="300" fill="url(#blueprint-grid)"/>
+
+                    <!-- Architectural Floorplan Group -->
+                    <g id="ai-sample-blueprint-group">
+                      <rect x="40" y="30" width="460" height="240" fill="none" stroke="#38bdf8" stroke-width="3" rx="4"/>
+                      <text id="ai-svg-title" x="270" y="25" fill="#38bdf8" font-size="10" text-anchor="middle" font-weight="bold">مسقط معماري: الطابق الأرضي للمبنى الحكومي النموذجي</text>
+                      <line x1="40" y1="150" x2="260" y2="150" stroke="#475569" stroke-width="2.5"/>
+                      <line x1="260" y1="30" x2="260" y2="270" stroke="#475569" stroke-width="2.5"/>
+                      <line x1="380" y1="30" x2="380" y2="150" stroke="#475569" stroke-width="2.5"/>
+                      <text x="150" y="90" fill="#64748b" font-size="10" text-anchor="middle">قاعة خدمة المواطنين</text>
+                      <text x="150" y="210" fill="#64748b" font-size="10" text-anchor="middle">دورة مياه الزوار</text>
+                      <text x="320" y="90" fill="#64748b" font-size="10" text-anchor="middle">بهو المصاعد</text>
+                      <text x="440" y="90" fill="#64748b" font-size="10" text-anchor="middle">المكاتب الإدارية</text>
+                      <text x="380" y="210" fill="#64748b" font-size="10" text-anchor="middle">المدخل الرئيسي والمنحدر</text>
+                      <line x1="340" y1="270" x2="420" y2="270" stroke="#22c55e" stroke-width="5"/>
+                      <text x="380" y="285" fill="#22c55e" font-size="8.5" text-anchor="middle" font-weight="bold">المدخل</text>
+                    </g>
+                  </svg>
+
+                  <!-- 2. The Rendered Uploaded PDF Canvas (Directly displays the uploaded PDF page!) -->
+                  <canvas id="ai-pdf-canvas" class="hidden max-h-[350px] max-w-full object-contain rounded-lg shadow-2xl transition-all"></canvas>
+
+                  <!-- 3. The Rendered Uploaded Image (Directly displays PNG/JPG/WEBP floorplan!) -->
+                  <img id="ai-uploaded-img" class="hidden max-h-[350px] max-w-full object-contain rounded-lg shadow-2xl transition-all" src="" alt="المخطط المعماري المرفوع">
+
+                  <!-- 4. Interactive Redline & Violation Overlay SVG (Placed DIRECTLY on top of the uploaded plan!) -->
+                  <svg id="ai-overlay-svg" viewBox="0 0 540 300" class="absolute inset-0 w-full h-full pointer-events-none z-20" preserveAspectRatio="none">
+                    <g id="ai-redlines-group">
+                      <!-- Redline 1: Threshold Violation -->
+                      <g class="ai-pin-marker cursor-pointer" onclick="highlightFinding(0)" style="pointer-events: auto;">
+                        <circle cx="380" cy="270" r="14" fill="#7f1d1d" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="3"/>
+                        <text x="380" y="274" fill="#ffffff" font-size="11" text-anchor="middle" font-weight="bold">!</text>
+                        <line x1="395" y1="270" x2="435" y2="250" stroke="#ef4444" stroke-width="1.5"/>
+                        <rect x="435" y="238" width="98" height="24" rx="5" fill="#1e1b4b" stroke="#ef4444" stroke-width="1.2"/>
+                        <text x="484" y="253" fill="#fecaca" font-size="8" text-anchor="middle" font-weight="bold">عتبة 4.5 سم (م.ب.ع 202)</text>
+                      </g>
+
+                      <!-- Redline 2: Narrow Restroom Door -->
+                      <g class="ai-pin-marker cursor-pointer" onclick="highlightFinding(1)" style="pointer-events: auto;">
+                        <circle cx="260" cy="200" r="14" fill="#7f1d1d" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="3"/>
+                        <text x="260" y="204" fill="#ffffff" font-size="11" text-anchor="middle" font-weight="bold">!</text>
+                        <line x1="260" y1="186" x2="220" y2="165" stroke="#ef4444" stroke-width="1.5"/>
+                        <rect x="125" y="153" width="95" height="24" rx="5" fill="#1e1b4b" stroke="#ef4444" stroke-width="1.2"/>
+                        <text x="172" y="168" fill="#fecaca" font-size="8" text-anchor="middle" font-weight="bold">باب 78 سم (المطلوب ≥90)</text>
+                      </g>
+
+                      <!-- Redline 3: Compliant Ramp -->
+                      <g class="ai-pin-marker cursor-pointer" onclick="highlightFinding(3)" style="pointer-events: auto;">
+                        <circle cx="340" cy="230" r="12" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+                        <text x="340" y="234" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="bold">✓</text>
+                        <line x1="330" y1="220" x2="290" y2="210" stroke="#10b981" stroke-width="1.5"/>
+                        <rect x="205" y="198" width="85" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+                        <text x="247" y="212" fill="#a7f3d0" font-size="7.5" text-anchor="middle" font-weight="bold">منحدر مطابق (1:14)</text>
+                      </g>
+
+                      <!-- Redline 4: Elevator Turning Space -->
+                      <g class="ai-pin-marker cursor-pointer" onclick="highlightFinding(4)" style="pointer-events: auto;">
+                        <circle cx="320" cy="70" r="12" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+                        <text x="320" y="74" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="bold">✓</text>
+                        <line x1="332" y1="70" x2="355" y2="60" stroke="#10b981" stroke-width="1.5"/>
+                        <rect x="355" y="49" width="90" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+                        <text x="400" y="63" fill="#a7f3d0" font-size="7.5" text-anchor="middle" font-weight="bold">كابينة 1.4×1.4م مطابقة</text>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+
+              </div>
+
+              <!-- Viewport Footer Legend & Opacity -->
+              <div class="flex justify-between items-center text-[10px] text-slate-400 mt-2 px-1 flex-wrap gap-2">
+                <div class="flex items-center gap-3">
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> مخالفات معمارية (انقر للمعاينة)</span>
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> عناصر مطابقة لكود 202</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span>شفافية المخطط:</span>
+                  <input type="range" id="plan-opacity-slider" min="30" max="100" value="95" oninput="applyPlanFilter()" class="w-20 accent-purple-600 h-1.5 cursor-pointer">
+                </div>
               </div>
             </div>
 
@@ -2795,6 +2847,7 @@ ${d.projects.map(p => '- ' + p).join('\n')}
 
     // ==========================================
     // ==========================================
+    // ==========================================
     // --- 3. AI ARCHITECTURAL PLAN CHECKER ---
     // ==========================================
 
@@ -2832,25 +2885,15 @@ ${d.projects.map(p => '- ' + p).join('\n')}
     let currentAISample = 'needs_retrofit';
     let uploadedPlanFile = null;
     let uploadedPlanUrl = null;
-    let aiViewMode = 'blueprint';
+    let currentPdfDoc = null;
+    let currentPdfPage = 1;
+    let totalPdfPages = 1;
+    let planZoom = 1.0;
+    let planFilterMode = 'blueprint';
 
-    function switchAIView(view) {
-      aiViewMode = view;
-      const svg = document.getElementById('ai-plan-svg');
-      const orig = document.getElementById('ai-original-preview');
-      const btnBlue = document.getElementById('btn-view-blueprint');
-      const btnOrig = document.getElementById('btn-view-original');
-      if (view === 'blueprint') {
-        if (svg) svg.classList.remove('hidden');
-        if (orig) orig.classList.add('hidden');
-        if (btnBlue) { btnBlue.className = 'px-2 py-0.5 rounded bg-purple-600 text-white font-bold transition'; }
-        if (btnOrig) { btnOrig.className = 'px-2 py-0.5 rounded text-slate-400 hover:text-white transition'; }
-      } else {
-        if (svg) svg.classList.add('hidden');
-        if (orig) orig.classList.remove('hidden');
-        if (btnBlue) { btnBlue.className = 'px-2 py-0.5 rounded text-slate-400 hover:text-white transition'; }
-        if (btnOrig) { btnOrig.className = 'px-2 py-0.5 rounded bg-purple-600 text-white font-bold transition'; }
-      }
+    // Initialize PDF.js worker if available
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
     function initPlanDropzone() {
@@ -2893,7 +2936,7 @@ ${d.projects.map(p => '- ' + p).join('\n')}
       const fileSizeKB = (file.size / 1024).toFixed(1);
       const sizeText = file.size > 1048576 ? (file.size / 1048576).toFixed(2) + ' MB' : fileSizeKB + ' KB';
 
-      // Show metadata banner
+      // Update file info display
       const infoBox = document.getElementById('uploaded-file-info');
       const nameEl = document.getElementById('uploaded-file-name');
       const sizeEl = document.getElementById('uploaded-file-size');
@@ -2904,42 +2947,13 @@ ${d.projects.map(p => '- ' + p).join('\n')}
         sizeEl.innerText = `${isPDF ? '📄 مستند معماري PDF' : '🖼️ صورة مسقط معماري'} (${sizeText})`;
       }
 
+      // Create object URL
       if (uploadedPlanUrl) {
         URL.revokeObjectURL(uploadedPlanUrl);
       }
       uploadedPlanUrl = URL.createObjectURL(file);
 
-      // Setup preview objects
-      const pdfObj = document.getElementById('ai-pdf-object');
-      const imgObj = document.getElementById('ai-image-preview');
-      const extLink = document.getElementById('ai-pdf-external-link');
-      const fbName = document.getElementById('ai-pdf-fallback-name');
-      const viewSwitch = document.getElementById('ai-view-switch');
-
-      if (viewSwitch) viewSwitch.classList.remove('hidden');
-
-      if (isPDF) {
-        if (pdfObj) {
-          pdfObj.data = uploadedPlanUrl;
-          pdfObj.style.display = 'block';
-        }
-        if (imgObj) imgObj.style.display = 'none';
-        if (extLink) extLink.href = uploadedPlanUrl;
-        if (fbName) fbName.innerText = `مستند: ${file.name} (${sizeText})`;
-      } else if (isImage) {
-        if (imgObj) {
-          imgObj.src = uploadedPlanUrl;
-          imgObj.style.display = 'block';
-        }
-        if (pdfObj) pdfObj.style.display = 'none';
-      }
-
-      // Update blueprint title
-      const svgTitle = document.getElementById('ai-svg-title');
-      if (svgTitle) {
-        svgTitle.textContent = `مسقط معماري مدقق: ${file.name}`;
-      }
-
+      // Define plan sample
       currentAISample = 'uploaded_plan';
       aiPlanSamples['uploaded_plan'] = {
         name: file.name,
@@ -2956,7 +2970,215 @@ ${d.projects.map(p => '- ' + p).join('\n')}
         ]
       };
 
+      // RENDER FILE DIRECTLY IN CANVAS!
+      if (isPDF) {
+        renderUploadedPdf(file);
+      } else if (isImage) {
+        renderUploadedImage(file);
+      } else {
+        // CAD or other format
+        renderGenericPlanFallback(file);
+      }
+
       animateAIScan(file.name, isPDF);
+    }
+
+    function renderUploadedPdf(file) {
+      const loading = document.getElementById('ai-plan-loading');
+      const loadText = document.getElementById('ai-loading-text');
+      if (loading) {
+        loading.classList.remove('hidden');
+        if (loadText) loadText.innerText = 'جاري استخراج صفحات المخطط المعماري عبر محرك PDF.js...';
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const typedarray = new Uint8Array(e.target.result);
+
+        if (typeof pdfjsLib === 'undefined') {
+          console.warn('PDF.js not loaded, using fallback preview.');
+          renderGenericPlanFallback(file);
+          if (loading) loading.classList.add('hidden');
+          return;
+        }
+
+        pdfjsLib.getDocument({ data: typedarray }).promise.then(pdf => {
+          currentPdfDoc = pdf;
+          totalPdfPages = pdf.numPages;
+          currentPdfPage = 1;
+          updatePdfPageControls();
+          drawPdfPage(1);
+        }).catch(err => {
+          console.error('PDF.js render error:', err);
+          renderGenericPlanFallback(file);
+          if (loading) loading.classList.add('hidden');
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function drawPdfPage(num) {
+      if (!currentPdfDoc) return;
+      const loading = document.getElementById('ai-plan-loading');
+      if (loading) loading.classList.remove('hidden');
+
+      currentPdfDoc.getPage(num).then(page => {
+        const canvas = document.getElementById('ai-pdf-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        const unscaledViewport = page.getViewport({ scale: 1.0 });
+        const targetHeight = 350;
+        const scale = Math.max(targetHeight / unscaledViewport.height, 1.0);
+        const viewport = page.getViewport({ scale: scale });
+
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+
+        page.render(renderContext).promise.then(() => {
+          if (loading) loading.classList.add('hidden');
+          
+          canvas.classList.remove('hidden');
+          const sampleSvg = document.getElementById('ai-sample-blueprint-group');
+          if (sampleSvg) sampleSvg.style.display = 'none';
+          const img = document.getElementById('ai-uploaded-img');
+          if (img) img.classList.add('hidden');
+
+          applyPlanFilter();
+          updatePdfPageControls();
+
+          const overlay = document.getElementById('ai-overlay-svg');
+          if (overlay) overlay.classList.remove('hidden');
+        });
+      }).catch(err => {
+        console.error('Error drawing PDF page:', err);
+        if (loading) loading.classList.add('hidden');
+      });
+    }
+
+    function renderUploadedImage(file) {
+      const loading = document.getElementById('ai-plan-loading');
+      if (loading) loading.classList.remove('hidden');
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('ai-uploaded-img');
+        const canvas = document.getElementById('ai-pdf-canvas');
+        const sampleSvg = document.getElementById('ai-sample-blueprint-group');
+
+        if (img) {
+          img.src = e.target.result;
+          img.classList.remove('hidden');
+        }
+        if (canvas) canvas.classList.add('hidden');
+        if (sampleSvg) sampleSvg.style.display = 'none';
+
+        applyPlanFilter();
+        if (loading) loading.classList.add('hidden');
+
+        const pageNav = document.getElementById('ai-pdf-pagenav');
+        if (pageNav) pageNav.classList.add('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderGenericPlanFallback(file) {
+      const sampleSvg = document.getElementById('ai-sample-blueprint-group');
+      if (sampleSvg) sampleSvg.style.display = 'block';
+      const svgTitle = document.getElementById('ai-svg-title');
+      if (svgTitle) {
+        svgTitle.textContent = `مسقط معماري مدقق: ${file.name}`;
+      }
+      const canvas = document.getElementById('ai-pdf-canvas');
+      if (canvas) canvas.classList.add('hidden');
+      const img = document.getElementById('ai-uploaded-img');
+      if (img) img.classList.add('hidden');
+    }
+
+    function setPlanFilter(mode) {
+      planFilterMode = mode;
+      applyPlanFilter();
+
+      ['blueprint', 'original', 'mono'].forEach(m => {
+        const btn = document.getElementById('btn-filter-' + m);
+        if (btn) {
+          btn.className = (m === mode)
+            ? 'px-2 py-0.5 rounded bg-purple-600 text-white font-bold transition text-[10px]'
+            : 'px-2 py-0.5 rounded text-slate-400 hover:text-white transition text-[10px]';
+        }
+      });
+    }
+
+    function applyPlanFilter() {
+      const canvas = document.getElementById('ai-pdf-canvas');
+      const img = document.getElementById('ai-uploaded-img');
+      const opacity = (document.getElementById('plan-opacity-slider') ? document.getElementById('plan-opacity-slider').value : 95) / 100;
+
+      let filterStr = '';
+      if (planFilterMode === 'blueprint') {
+        filterStr = `invert(1) hue-rotate(190deg) contrast(125%) brightness(95%) opacity(${opacity})`;
+      } else if (planFilterMode === 'mono') {
+        filterStr = `grayscale(1) contrast(115%) opacity(${opacity})`;
+      } else {
+        filterStr = `opacity(${opacity})`;
+      }
+
+      if (canvas) canvas.style.filter = filterStr;
+      if (img) img.style.filter = filterStr;
+    }
+
+    function zoomPlan(delta) {
+      if (delta === 0) {
+        planZoom = 1.0;
+      } else {
+        planZoom = Math.min(Math.max(planZoom + delta, 0.6), 2.5);
+      }
+      const layer = document.getElementById('ai-plan-layer');
+      if (layer) {
+        layer.style.transform = `scale(${planZoom})`;
+      }
+      const label = document.getElementById('ai-zoom-val');
+      if (label) label.innerText = `${Math.round(planZoom * 100)}%`;
+    }
+
+    function changePdfPage(delta) {
+      if (!currentPdfDoc) return;
+      const newP = currentPdfPage + delta;
+      if (newP >= 1 && newP <= totalPdfPages) {
+        currentPdfPage = newP;
+        drawPdfPage(currentPdfPage);
+      }
+    }
+
+    function updatePdfPageControls() {
+      const pageNav = document.getElementById('ai-pdf-pagenav');
+      const pageLabel = document.getElementById('ai-page-label');
+      if (pageNav && totalPdfPages > 1) {
+        pageNav.classList.remove('hidden');
+        pageNav.classList.add('flex');
+        if (pageLabel) pageLabel.innerText = `صفحة ${currentPdfPage} من ${totalPdfPages}`;
+      } else if (pageNav) {
+        pageNav.classList.add('hidden');
+        pageNav.classList.remove('flex');
+      }
+    }
+
+    function highlightFinding(index) {
+      const list = document.getElementById('ai-findings-list');
+      if (!list) return;
+      const items = list.children;
+      if (items && items[index]) {
+        items[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        items[index].classList.add('ring-2', 'ring-purple-500', 'scale-[1.02]');
+        setTimeout(() => {
+          items[index].classList.remove('ring-2', 'ring-purple-500', 'scale-[1.02]');
+        }, 1500);
+      }
     }
 
     function triggerAIScanClick() {
@@ -2979,8 +3201,8 @@ ${d.projects.map(p => '- ' + p).join('\n')}
         laser.style.top = '10%';
       }
       if (statusBadge) {
-        statusBadge.innerText = isPDF ? 'جاري استخراج مساقط PDF وتحليل المتجهات...' : 'جاري معالجة المسقط وتحليل الفضاءات...';
-        statusBadge.className = 'text-amber-400 font-bold animate-pulse';
+        statusBadge.innerText = isPDF ? 'جاري قراءة المخطط واستخراج الأبعاد...' : 'جاري تحليل المسقط المعماري...';
+        statusBadge.className = 'text-amber-400 font-bold animate-pulse text-[10px] bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-800';
       }
 
       setTimeout(() => {
@@ -2990,7 +3212,7 @@ ${d.projects.map(p => '- ' + p).join('\n')}
 
       setTimeout(() => {
         if (laser) laser.style.top = '90%';
-        if (statusBadge) statusBadge.innerText = 'جاري رصد الملاحظات وتثبيت التأشيرات (Redlines)...';
+        if (statusBadge) statusBadge.innerText = 'جاري تثبيت التأشيرات المعمارية على المخطط...';
       }, 800);
 
       setTimeout(() => {
@@ -3005,9 +3227,20 @@ ${d.projects.map(p => '- ' + p).join('\n')}
 
     function loadSamplePlan(type) {
       currentAISample = type;
-      switchAIView('blueprint');
-      const viewSwitch = document.getElementById('ai-view-switch');
-      if (viewSwitch) viewSwitch.classList.add('hidden');
+      currentPdfDoc = null;
+
+      const canvas = document.getElementById('ai-pdf-canvas');
+      if (canvas) canvas.classList.add('hidden');
+      const img = document.getElementById('ai-uploaded-img');
+      if (img) img.classList.add('hidden');
+      const pageNav = document.getElementById('ai-pdf-pagenav');
+      if (pageNav) pageNav.classList.add('hidden');
+
+      const sampleSvg = document.getElementById('ai-sample-blueprint-group');
+      if (sampleSvg) sampleSvg.style.display = 'block';
+
+      setPlanFilter('normal');
+
       const infoBox = document.getElementById('uploaded-file-info');
       if (infoBox) infoBox.classList.add('hidden');
       const svgTitle = document.getElementById('ai-svg-title');
@@ -3025,8 +3258,8 @@ ${d.projects.map(p => '- ' + p).join('\n')}
 
       const statusBadge = document.getElementById('ai-scan-status-badge');
       if (statusBadge) {
-        statusBadge.innerText = `اكتمل التحليل: ${plan.name}`;
-        statusBadge.className = 'text-purple-400 font-bold';
+        statusBadge.innerText = `اكتمل الفحص: ${plan.name}`;
+        statusBadge.className = 'text-purple-400 font-bold text-[10px] bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-800';
       }
 
       const chkDoors = document.getElementById('chk-scan-doors') ? document.getElementById('chk-scan-doors').checked : true;
@@ -3063,8 +3296,8 @@ ${d.projects.map(p => '- ' + p).join('\n')}
 
       const list = document.getElementById('ai-findings-list');
       if (list) {
-        list.innerHTML = filteredFindings.map(f => `
-          <div class="p-2.5 rounded-lg ${f.type === 'viol' ? 'bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/60 text-rose-900 dark:text-rose-200' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-emerald-900 dark:text-emerald-200'} flex items-start gap-2">
+        list.innerHTML = filteredFindings.map((f, idx) => `
+          <div id="ai-find-${idx}" class="p-2.5 rounded-lg ${f.type === 'viol' ? 'bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/60 text-rose-900 dark:text-rose-200' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-emerald-900 dark:text-emerald-200'} flex items-start gap-2 transition-all">
             <span class="text-sm">${f.type === 'viol' ? '❌' : '✅'}</span>
             <div class="flex-1">
               <div class="font-bold flex justify-between">
