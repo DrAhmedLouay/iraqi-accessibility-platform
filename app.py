@@ -83,7 +83,14 @@ with st.sidebar:
             )
 
     st.divider()
+    img_path = os.path.join(current_dir, "dr_riyad_al_ubaidi.jpg")
+    if os.path.exists(img_path):
+        st.image(img_path, caption="الخبير الدولي د. رياض العبيدي في TEDx بغداد", use_container_width=True)
     st.markdown("""
+    <div style="font-size: 0.8rem; background: #ecfdf5; border-right: 3px solid #059669; padding: 8px; border-radius: 6px; color: #064e3b; margin-bottom: 12px;">
+        <strong>شراكة علمية:</strong><br>
+        "تم تطوير هذه المنصة بالتعاون مع الخبير الدولي في تحوير المباني والمدن لصالح ذوي الاحتياجات الخاصة وكبار السن المهندس المعماري الدكتور رياض طالب باقر العبيدي"
+    </div>
     <div style="font-size: 0.85rem; color: #64748b; text-align: center;">
         <strong>إشراف وتطوير:</strong><br>
         المهندس المعماري الدكتور أحمد لؤي أحمد<br>
