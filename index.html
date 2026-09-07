@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المنصة الوطنية للوصول الشامل والبيئة العمرانية الدامجة | جمهورية العراق</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* High Contrast Accessibility Mode */
+    body.high-contrast {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast * {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border-color: #ffff00 !important;
+      box-shadow: none !important;
+    }
+    body.high-contrast input, body.high-contrast select, body.high-contrast button {
+      border: 2px solid #ffff00 !important;
+      color: #ffff00 !important;
+    }
+
+    /* Reading Guide Line */
+    #reading-guide {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(16, 185, 129, 0.85);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: white !important; color: black !important; font-size: 12pt; }
+    }
+    .print-only { display: none; }
+  </style>
+</head>
+<body id="app-body" class="bg-[var(--background,#f4f6f8)] text-[var(--foreground,#1e293b)] antialiased font-sans transition-all duration-200 min-h-screen text-[14px]">
+
+  <!-- Reading Guide -->
+  <div id="reading-guide"></div>
+
+  <!-- TOP ACCESSIBILITY TOOLBAR (Practicing What We Preach) -->
+  <div class="no-print bg-slate-900 text-slate-200 text-xs px-4 py-1.5 border-b border-slate-800 flex flex-wrap justify-between items-center gap-2">
+    <div class="flex items-center gap-2">
+      <span class="text-emerald-400 font-bold">♿ أدوات النفاذية وسهولة الوصول:</span>
+      <span class="text-slate-400 hidden sm:inline">| منصة صديقة لكبار السن وضعاف البصر والمكفوفين</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <!-- Read Aloud Speech -->
+      <button onclick="toggleSpeech()" id="btn-speech" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center gap-1 border border-slate-700 text-[11px] font-medium" title="قراءة صوتية آلية">
+        <span id="speech-icon">🔊</span> <span id="speech-txt">قراءة الصفحة صوتياً</span>
+      </button>
+
+      <!-- Font Resizing -->
+      <div class="flex items-center bg-slate-800 rounded border border-slate-700 px-1">
+        <button onclick="changeFontSize(-1)" class="px-1.5 py-0.5 hover:text-emerald-400 font-bold" title="تصغير الخط">A-</button>
+        <span class="text-[10px] px-1 text-slate-400">حجم الخط</span>
+        <button onclick="changeFontSize(1)" class="px-1.5 py-0.5 hover:text-emerald-400 font-bold" title="تكبير الخط">A+</button>
+      </div>
+
+      <!-- High Contrast Toggle -->
+      <button onclick="toggleHighContrast()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-[11px] font-medium" title="نمط التباين العالي">
+        🌓 تباين عالي (أصفر/أسود)
+      </button>
+
+      <!-- Reading Guide Toggle -->
+      <button onclick="toggleReadingGuide()" id="btn-guide" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[11px] font-medium" title="مسطرة القراءة لضعاف التركيز">
+        📏 مسطرة القراءة
+      </button>
+    </div>
+  </div>
+
+  <!-- Header & Official Branding -->
+  <header class="no-print bg-[var(--card,#ffffff)] border-b border-[var(--border,#e2e8f0)] shadow-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-3">
+      <div class="flex items-center space-x-3 space-x-reverse">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-900 flex items-center justify-center text-white shadow-md font-black text-xl">
+          ع
+        </div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-black text-[var(--foreground,#0f172a)] tracking-tight">المنصة الوطنية العراقية للوصول الشامل</h1>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full border border-emerald-300">م.ب.ع 202 نافذة رسمياً</span>
+            <span class="text-[10px] bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-300">مطابقة ADA 2010</span>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground,#64748b)]">المنظومة التنفيذية لمدونة البناء العراقية (م.ب.ع 202) بالوقائع العراقية 4396 | متوافقة كلياً مع كود الوصول الأمريكي ADA والمعايير الدولية ISO 21542</p>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex flex-wrap items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="tab-btn px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 font-bold shadow-sm">لوحة المؤشرات</button>
+        <button onclick="switchTab('calculator')" id="tab-btn-calculator" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">الحاسبة والمحاكي 2D</button>
+        <button onclick="switchTab('audit')" id="tab-btn-audit" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">نظام التدقيق والسجل</button>
+        <button onclick="switchTab('boq')" id="tab-btn-boq" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">حاسبة الكلفة (BOQ)</button>
+        <button onclick="switchTab('retrofit')" id="tab-btn-retrofit" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">دليل المعالجات السريعة</button>
+        <button onclick="switchTab('library')" id="tab-btn-library" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">المكتبة والتشريعات</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- TAB 1: DASHBOARD & GOVERNORATES HEATMAP -->
+    <section id="tab-dashboard" class="tab-content space-y-6">
+      <!-- Hero Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl space-y-3">
+          <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-medium border border-emerald-500/30">
+            <span>🏛️ المبادرة الوطنية العراقية لتأهيل البيئة العمرانية الدامجة (2026 - 2029)</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black leading-tight">مدن عراقية ميسرة، حرة من العوائق، وعادلة لكافة فئات المجتمع</h2>
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+            المنظومة الرقمية الشاملة لمهندسي البلديات، المكاتب الاستشارية، ولجان التفتيش لإلزام معايير الوصول الشامل في كافة تصاميم إجازات البناء وشهادات الإشغال.
+          </p>
+          <div class="flex flex-wrap gap-2.5 pt-2">
+            <button onclick="switchTab('calculator')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">📐 محاكي الفضاءات والحاسبة</button>
+            <button onclick="switchTab('boq')" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">💰 تخمين كلف التأهيل (BOQ)</button>
+            <button onclick="switchTab('audit')" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-4 py-2 rounded-xl transition border border-white/20">📋 فحص مبنى وإصدار شهادة</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium">النسبة الإلزامية للمشاريع الجديدة</div>
+          <div class="text-2xl font-black text-emerald-600 mt-1">100%</div>
+          <div class="text-[11px] text-slate-500 mt-1">شرط إلزامي لمنح إجازة البناء</div>
+        </div>
+        <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium">أقصى ميل مسموح للمنحدر</div>
+          <div class="text-2xl font-black text-blue-600 mt-1">1:12 <span class="text-xs font-normal text-slate-500">(8.3%)</span></div>
+          <div class="text-[11px] text-slate-500 mt-1">مع استراحة أفقية كل 9 أمتار</div>
+        </div>
+        <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium">قطر دوران الكرسي المتحرك</div>
+          <div class="text-2xl font-black text-purple-600 mt-1">Ø 150 <span class="text-xs font-normal text-slate-500">سم</span></div>
+          <div class="text-[11px] text-slate-500 mt-1">فضاء حر بالكامل في الغرف والحمامات</div>
+        </div>
+        <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium">مهلة توفيق أوضاع المباني القائمة</div>
+          <div class="text-2xl font-black text-amber-600 mt-1">36 <span class="text-xs font-normal text-slate-500">شهراً</span></div>
+          <div class="text-[11px] text-slate-500 mt-1">وفق خطة التدخلات السريعة</div>
+        </div>
+      </div>
+
+      <!-- GOVERNORATES READINESS TRACKER (New Feature) -->
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">مؤشر جاهزية المحافظات العراقية للتطبيق والامتثال (2026)</h3>
+            <p class="text-xs text-slate-500">متابعة تفعيل لجان التدقيق البلدية في أمانة بغداد ومديريات بلديات المحافظات.</p>
+          </div>
+          <span class="text-xs bg-emerald-50 text-emerald-800 font-bold px-3 py-1 rounded-full border border-emerald-200">تحديث دوري مركزي</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">أمانة بغداد</div>
+            <div class="text-lg font-black text-emerald-600 mt-1">82%</div>
+            <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold">لجنة مفعلة</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">بلدية البصرة</div>
+            <div class="text-lg font-black text-blue-600 mt-1">74%</div>
+            <span class="text-[10px] text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded font-bold">لجنة مفعلة</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">بلدية نينوى</div>
+            <div class="text-lg font-black text-amber-600 mt-1">65%</div>
+            <span class="text-[10px] text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded font-bold">قيد التدريب</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">بلدية أربيل</div>
+            <div class="text-lg font-black text-emerald-600 mt-1">79%</div>
+            <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold">لجنة مفعلة</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">بلدية كربلاء</div>
+            <div class="text-lg font-black text-emerald-600 mt-1">88%</div>
+            <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold">أعلى امتثال</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">بلدية النجف</div>
+            <div class="text-lg font-black text-emerald-600 mt-1">81%</div>
+            <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold">لجنة مفعلة</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: ARCHITECTURAL CALCULATOR & 2D SPACE SIMULATOR -->
+    <section id="tab-calculator" class="tab-content hidden space-y-6">
+      
+      <!-- Part A: Ramp Calculator -->
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-5">
+          <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">1. الحاسبة الهندسية الذكية للمنحدرات (Ramp & Slope Calculator)</h2>
+          <p class="text-xs text-slate-500">حساب الأطوال والميول وعدد البسطات الإلزامية وفق معايير الكود العراقي.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="lg:col-span-5 space-y-4 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">فرق الارتفاع الرأسي المطلوب تجاوزه (بالسنتيمتر):</label>
+              <div class="relative">
+                <input type="number" id="calc-height" value="60" min="5" max="300" oninput="runCalculator()" class="w-full px-3 py-2 text-sm font-bold rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-500">
+                <span class="absolute left-3 top-2 text-slate-400 font-bold">سم</span>
+              </div>
+              <span class="text-[10px] text-slate-500">مثال: 4 درجات بارتفاع 15 سم = 60 سم.</span>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نسبة الميل المستهدفة:</label>
+              <select id="calc-ratio" onchange="runCalculator()" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+                <option value="12">1:12 (8.3%) - الحد الأقصى الإلزامي في الكود</option>
+                <option value="14">1:14 (7.1%) - ميل مريح للمستخدم المستقل</option>
+                <option value="16" selected>1:16 (6.25%) - موصى به لكبار السن وضعاف البنية</option>
+                <option value="20">1:20 (5.0%) - ميل مثالي فائق السهولة للمسارات الخارجية</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">شكل المسار الهندسي:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center gap-1.5 p-2 border rounded-lg cursor-pointer bg-white dark:bg-slate-800">
+                  <input type="radio" name="ramp-layout" value="straight" checked onchange="runCalculator()">
+                  <span>مستقيم ممتد</span>
+                </label>
+                <label class="flex items-center gap-1.5 p-2 border rounded-lg cursor-pointer bg-white dark:bg-slate-800">
+                  <input type="radio" name="ramp-layout" value="switchback" onchange="runCalculator()">
+                  <span>منكسر (حرف U / L)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-4">
+            <div class="grid grid-cols-3 gap-3 text-center">
+              <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+                <div class="text-[11px] text-emerald-800 dark:text-emerald-300 font-bold">طول المنحدر المائل</div>
+                <div class="text-xl font-black text-emerald-700 dark:text-emerald-400 mt-1" id="res-ramp-length">9.60 م</div>
+              </div>
+              <div class="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+                <div class="text-[11px] text-blue-800 dark:text-blue-300 font-bold">بسطات الاستراحة</div>
+                <div class="text-xl font-black text-blue-700 dark:text-blue-400 mt-1" id="res-landings-count">2 بسطة</div>
+              </div>
+              <div class="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800">
+                <div class="text-[11px] text-purple-800 dark:text-purple-300 font-bold">إجمالي الطول الكلي</div>
+                <div class="text-xl font-black text-purple-700 dark:text-purple-400 mt-1" id="res-total-footprint">12.60 م</div>
+              </div>
+            </div>
+
+            <!-- SVG Ramp Visual -->
+            <div class="bg-slate-900 rounded-xl p-4 text-white">
+              <div class="flex justify-between items-center text-xs mb-2 text-slate-400">
+                <span>المحاكاة البصرية للمقطع الجانبي:</span>
+                <span id="res-slope-angle" class="text-emerald-400 font-bold">الزاوية: 3.58°</span>
+              </div>
+              <div class="w-full bg-slate-950 rounded-lg p-2 flex items-end justify-center min-h-[120px] relative border border-slate-800">
+                <svg id="ramp-svg" viewBox="0 0 500 110" class="w-full h-24">
+                  <line x1="20" y1="95" x2="480" y2="95" stroke="#475569" stroke-width="2" stroke-dasharray="4"/>
+                  <rect x="20" y="25" width="75" height="70" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                  <text x="57" y="18" fill="#38bdf8" font-size="9" text-anchor="middle" font-weight="bold">المدخل</text>
+                  <polygon points="95,25 395,95 95,95" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" stroke-width="2.5"/>
+                  <rect x="395" y="92" width="65" height="5" fill="#f59e0b"/>
+                  <text x="427" y="85" fill="#f59e0b" font-size="8" text-anchor="middle">استراحة</text>
+                  <line x1="95" y1="15" x2="395" y2="85" stroke="#e2e8f0" stroke-width="2"/>
+                  <text x="245" y="45" fill="#10b981" font-size="10" text-anchor="middle" font-weight="bold" id="svg-text-ratio">1:16</text>
+                </svg>
+              </div>
+              <div class="text-[11px] text-slate-300 mt-2 flex items-center gap-1.5">
+                <span class="text-emerald-400">✓</span>
+                <span id="calc-verdict">تصميم مطابق ومريح ومناسب لكبار السن وللاستخدام الذاتي.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Part B: Interactive 2D Accessible Restroom Simulator (Iraqi Universal Design Standard) -->
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-4 flex flex-wrap justify-between items-center gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">2. محاكي الفضاءات المعمارية 2D: المرفق الصحي الشامل (2.0 × 2.0 م)</h2>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">معايير الأبعاد الصافية</span>
+            </div>
+            <p class="text-xs text-slate-500">فحص تفاعلي لموقع المرحاض والمحور (45-50 سم)، مساحة الدوران (Ø 150 سم)، مساند الارتكاز (113 كغم)، وحرم المغسلة المعلقة.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="toggleSimElement('grabBars')" id="btn-toggle-bars" class="px-2.5 py-1 text-xs rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300">مساند الارتكاز (L & Drop-down)</button>
+            <button onclick="toggleSimElement('doorSwing')" id="btn-toggle-door" class="px-2.5 py-1 text-xs rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300">فحص اتجاه فتح الباب (داخل/خارج)</button>
+            <button onclick="toggleSimElement('tTurn')" id="btn-toggle-tturn" class="px-2.5 py-1 text-xs rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 font-bold">بديل المباني القديمة: دوران حرف T (150×90 سم)</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 flex justify-center">
+            <!-- 2D Canvas Simulator Area -->
+            <div class="relative bg-slate-950 p-4 rounded-2xl border-4 border-slate-800 shadow-2xl">
+              <svg id="sim-svg" width="360" height="360" viewBox="0 0 360 360" class="rounded-xl bg-slate-900">
+                <!-- Grid background (each 50cm = 75px) -->
+                <defs>
+                  <pattern id="grid" width="37.5" height="37.5" patternUnits="userSpaceOnUse">
+                    <path d="M 37.5 0 L 0 0 0 37.5" fill="none" stroke="#334155" stroke-width="0.5"/>
+                  </pattern>
+                </defs>
+                <!-- Room Perimeter: 2.0 x 2.0 m (300 x 300 px) -->
+                <rect width="300" height="300" x="30" y="30" fill="url(#grid)" stroke="#0ea5e9" stroke-width="3" rx="4"/>
+                
+                <!-- Dimensions Labels -->
+                <text x="180" y="20" fill="#0ea5e9" font-size="11" text-anchor="middle" font-weight="bold">عرض الغرفة الصافي: 2.00 م (200 سم)</text>
+                <text x="14" y="180" fill="#0ea5e9" font-size="11" text-anchor="middle" transform="rotate(-90 14 180)" font-weight="bold">طول الغرفة الصافي: 2.00 م (200 سم)</text>
+
+                <!-- Full Turning Circle (Ø 150 cm = 225px diameter) -->
+                <g id="sim-circle-group">
+                  <circle cx="180" cy="180" r="112" fill="rgba(16, 185, 129, 0.16)" stroke="#10b981" stroke-width="2" stroke-dasharray="5"/>
+                  <text x="180" y="175" fill="#10b981" font-size="11" text-anchor="middle" font-weight="bold">دائرة دوران الكرسي المتحرك</text>
+                  <text x="180" y="190" fill="#10b981" font-size="10" text-anchor="middle">قطر 150 سم (دوران 360° حر تماماً)</text>
+                </g>
+
+                <!-- T-Turn Alternative (150x90 cm) for existing buildings (Hidden by default) -->
+                <g id="sim-tturn-group" style="display: none;">
+                  <!-- Base stem of T (90cm wide, 150cm long) -->
+                  <rect x="112.5" y="67.5" width="135" height="225" fill="rgba(245, 158, 11, 0.22)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4" rx="4"/>
+                  <!-- Crossbar of T (150cm wide, 90cm high) -->
+                  <rect x="67.5" y="112.5" width="225" height="135" fill="rgba(245, 158, 11, 0.22)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4" rx="4"/>
+                  <text x="180" y="175" fill="#f59e0b" font-size="11" text-anchor="middle" font-weight="bold">مساحة مناورة حرف T</text>
+                  <text x="180" y="190" fill="#f59e0b" font-size="9.5" text-anchor="middle">(150 × 90 سم) استثناء الأبنية القديمة</text>
+                </g>
+
+                <!-- Centerline dimension to side wall (45-50 cm) -->
+                <line x1="285" y1="35" x2="330" y2="35" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="2"/>
+                <text x="307" y="26" fill="#f43f5e" font-size="8" text-anchor="middle" font-weight="bold">45-50 سم للمحور</text>
+
+                <!-- Toilet Fixture (Top Right) -->
+                <rect x="265" y="35" width="45" height="60" rx="12" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                <circle cx="287.5" cy="75" r="14" fill="#94a3b8"/>
+                <text x="287" y="108" fill="#f1f5f9" font-size="8" text-anchor="middle" font-weight="bold">مرحاض (ارتفاع 45-50 سم)</text>
+
+                <!-- Shataf / Bidet Sprayer & Paper (Right Wall) -->
+                <circle cx="323" cy="70" r="5" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5"/>
+                <text x="323" y="85" fill="#38bdf8" font-size="7" text-anchor="middle">شطاف (60-70سم)</text>
+
+                <!-- Grab Bars (Around Toilet) -->
+                <g id="sim-bars">
+                  <!-- Fixed L-shaped Bar on side wall -->
+                  <path d="M 326 40 L 326 95 L 305 95" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+                  <text x="326" y="105" fill="#f59e0b" font-size="7" text-anchor="end">مسند L ثابت (80-90سم)</text>
+                  <!-- Drop-down Foldable Bar on open side -->
+                  <line x1="250" y1="40" x2="250" y2="95" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+                  <text x="248" y="105" fill="#f59e0b" font-size="7" text-anchor="middle">مسند متحرك قابل للطي (تحمل 113 كغم)</text>
+                </g>
+
+                <!-- Wall-hung Washbasin (Bottom Right) -->
+                <path d="M 260 275 Q 290 255 320 275 L 320 325 L 260 325 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                <circle cx="290" cy="290" r="5" fill="#38bdf8"/>
+                <!-- Knee clearance annotation -->
+                <rect x="255" y="270" width="70" height="55" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2"/>
+                <text x="285" y="255" fill="#38bdf8" font-size="8" text-anchor="middle" font-weight="bold">مغسلة معلقة (ارتفاع 80-85 سم)</text>
+                <text x="285" y="265" fill="#94a3b8" font-size="7" text-anchor="middle">فراغ سفلي: ارتفاع ≥ 70سم، عمق ≥ 20سم</text>
+
+                <!-- Tilted Mirror & Lever Faucet -->
+                <line x1="270" y1="327" x2="310" y2="327" stroke="#60a5fa" stroke-width="3"/>
+                <text x="290" y="342" fill="#60a5fa" font-size="7" text-anchor="middle">مرآة مائلة (الحافة ≤ 100 سم)</text>
+
+                <!-- Door Opening (Bottom Left: 90cm clear width) -->
+                <line x1="30" y1="330" x2="120" y2="330" stroke="#22c55e" stroke-width="5"/>
+                <path id="sim-door-arc" d="M 120 330 A 90 90 0 0 1 30 330" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" stroke-width="2" stroke-dasharray="3"/>
+                <text x="75" y="345" fill="#22c55e" font-size="9" text-anchor="middle" font-weight="bold">عرض الباب: 90 سم (يفتح للخارج - بدون عتبة)</text>
+
+                <!-- Emergency Pull Cord (Top Left) -->
+                <circle cx="45" cy="45" r="7" fill="#dc2626" stroke="#fecaca" stroke-width="2"/>
+                <line x1="45" y1="45" x2="45" y2="65" stroke="#dc2626" stroke-width="2"/>
+                <text x="45" y="77" fill="#f87171" font-size="7.5" text-anchor="middle" font-weight="bold">حبل طوارئ (10 سم عن الأرض)</text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 space-y-2.5 text-xs">
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+              <h4 class="font-bold text-slate-900 dark:text-slate-100 text-xs border-b border-slate-200 dark:border-slate-800 pb-1 flex items-center justify-between">
+                <span>المواصفة التفصيلية للمرفق الصحي الميسر:</span>
+                <span class="text-[10px] text-emerald-600 font-bold">كود عراقي 2026</span>
+              </h4>
+              <div class="space-y-1.5 text-slate-700 dark:text-slate-300 text-[11.5px]">
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>المساحة والدوران:</strong> فضاء صافٍ 2.0 × 2.0 م مع دائرة دوران حرة بقطر 150 سم (360°).</div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>الباب الصافي:</strong> عرض ≥ 90 سم، يفتح للخارج أو سحاب، مع إلغاء العتبات تماماً.</div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>المرحاض:</strong> ارتفاع المقعد 45-50 سم، والمحور المركزي 45-50 سم عن أقرب جدار جانبي.</div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>الشطاف والورق:</strong> تثبيت على ارتفاع 60-70 سم في متناول اليد المباشر.</div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>المغسلة:</strong> حافة علوية 80-85 سم، معلقة مع فراغ سفلي بارتفاع ≥ 70 سم وعمق ≥ 20 سم، بخلاط رافع أو مستشعر.</div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>مساند الارتكاز:</strong> ارتفاع 80-90 سم، تحمل ≥ 113 كغم (مسند L ثابت + مسند Drop-down متحرك).</div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">▪</span>
+                  <div><strong>الملحقات والسلامة:</strong> مرآة بحافة سفلية ≤ 100 سم أو مائلة، وحبل إنذار طوارئ يتدلى حتى 10 سم عن الأرض مربوط بإنذار صوتي ضوئي خارجي.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-300 text-[11px]">
+              <strong>تحذير الإشغال الإلزامي:</strong> يُحظر ترخيص أي دورة مياه ميسرة تقل أبعادها الصافية عن 2.00 × 2.00 م، أو يُفتح بابها للداخل، لما يسببه ذلك من إعاقة حرجة لعمليات الإنقاذ والإسعاف في حالات السقوط.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: AUDIT SYSTEM & LOCAL RECORDS REGISTRY -->
+    <section id="tab-audit" class="tab-content hidden space-y-6">
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-wrap justify-between items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-3 mb-5">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">نظام التدقيق الهندسي وسجل المباني المفحوصة</h2>
+            <p class="text-xs text-slate-500">فحص ميداني فوري، احتساب إلكتروني، حفظ السجلات محلياً وإصدار وثيقة الامتثال الرسمية.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="fillSampleData(true)" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700">نموذج مطابق (100%)</button>
+            <button onclick="fillSampleData(false)" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700">نموذج يحتاج تأهيل</button>
+          </div>
+        </div>
+
+        <!-- Facility Details Form -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 bg-slate-50 dark:bg-slate-900 rounded-xl mb-5 border border-slate-200 dark:border-slate-800 text-xs">
+          <div>
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المبنى / المنشأة:</span>
+            <input type="text" id="audit-building-name" value="مستشفى الكرخ التعليمي - العيادات الاستشارية" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+          </div>
+          <div>
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المحافظة والمنطقة:</span>
+            <input type="text" id="audit-building-loc" value="بغداد / الكرخ" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+          </div>
+          <div>
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الإشغال:</span>
+            <select id="audit-building-type" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+              <option>مستشفى أو مركز صحي</option>
+              <option>دائرة حكومية وخدمية</option>
+              <option>مؤسسة تعليمية / جامعة</option>
+              <option>مجمع تجاري واستثماري</option>
+            </select>
+          </div>
+          <div>
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المهندس الفاحص:</span>
+            <input type="text" id="audit-engineer-name" value="م. أحمد لؤي البجاري" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+          </div>
+        </div>
+
+        <!-- Checklist Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-right border-collapse">
+            <thead>
+              <tr class="bg-slate-100 dark:bg-slate-800 border-b border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                <th class="p-2.5">ت</th>
+                <th class="p-2.5">العنصر المفحوص</th>
+                <th class="p-2.5">المعيار المطلوب بالكود</th>
+                <th class="p-2.5">القياس الفعلي</th>
+                <th class="p-2.5">الأهمية</th>
+                <th class="p-2.5 text-center">القرار</th>
+              </tr>
+            </thead>
+            <tbody id="interactive-audit-tbody" class="divide-y divide-slate-200 dark:divide-slate-800">
+              <!-- JS rendered -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Live Status and Actions -->
+        <div class="mt-6 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="text-center p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm min-w-[100px]">
+              <div class="text-[11px] text-slate-500 font-bold">نسبة الامتثال</div>
+              <div class="text-2xl font-black text-emerald-600" id="live-audit-percent">100%</div>
+            </div>
+            <div>
+              <div class="font-bold text-sm text-slate-900 dark:text-slate-100" id="live-audit-class">الفئة الذهبية (مؤهل بالكامل)</div>
+              <p class="text-xs text-slate-500 mt-0.5" id="live-audit-note">مستوفٍ لكافة البنود الحرجة ويمنح ترخيص الإشغال فوراً.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="saveAuditToStorage()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow">💾 حفظ في السجل المحلي</button>
+            <button onclick="openCertificateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow">📜 إصدار شهادة الامتثال</button>
+            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition">🖨️ طباعة</button>
+          </div>
+        </div>
+
+        <!-- SAVED RECORDS ARCHIVE (New Feature) -->
+        <div class="mt-8 border-t border-slate-200 dark:border-slate-800 pt-5">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">📂 سجل المباني المفحوصة والمحفوظة محلياً</h3>
+            <button onclick="clearAuditStorage()" class="text-[11px] text-red-600 hover:underline">مسح السجل بالكامل</button>
+          </div>
+          <div id="saved-records-list" class="space-y-2 text-xs">
+            <!-- Dynamic Records from LocalStorage -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: BOQ & RETROFIT COST ESTIMATOR (New Feature) -->
+    <section id="tab-boq" class="tab-content hidden space-y-6">
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-5 flex flex-wrap justify-between items-center gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">حاسبة جدول الكميات والتخمين المالي للتأهيل (Retrofit BOQ in IQD)</h2>
+            <p class="text-xs text-slate-500">حساب الميزانية التقديرية لتأهيل المباني الحكومية والخاصة بالدينار العراقي استناداً إلى أسعار السوق المحلية 2026.</p>
+          </div>
+          <button onclick="resetBOQ()" class="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 underline">إعادة ضبط الكميات</button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- BOQ Interactive Items Table -->
+          <div class="lg:col-span-8 overflow-x-auto">
+            <table class="w-full text-xs text-right border-collapse">
+              <thead>
+                <tr class="bg-slate-100 dark:bg-slate-800 border-b border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                  <th class="p-2.5">العنصر والتدخل الهندسي</th>
+                  <th class="p-2.5">الوحدة</th>
+                  <th class="p-2.5">سعر الوحدة التقديري</th>
+                  <th class="p-2.5 w-24 text-center">الكمية</th>
+                  <th class="p-2.5 text-left">الإجمالي (د.ع)</th>
+                </tr>
+              </thead>
+              <tbody id="boq-items-tbody" class="divide-y divide-slate-200 dark:divide-slate-800">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Total Budget Card -->
+          <div class="lg:col-span-4 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 pb-2">ملخص الكلفة التقديرية للمشروع</h3>
+            
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>المجموع الأساسي للأعمال:</span>
+                <span id="boq-subtotal" class="font-bold text-slate-800 dark:text-slate-200">0 د.ع</span>
+              </div>
+              <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>احتياط طوارئ وإشراف (10%):</span>
+                <span id="boq-contingency" class="font-bold text-slate-800 dark:text-slate-200">0 د.ع</span>
+              </div>
+              <div class="border-t border-slate-300 dark:border-slate-700 pt-2 flex justify-between items-center">
+                <span class="font-black text-sm text-slate-900 dark:text-slate-100">إجمالي الميزانية التخمينية:</span>
+                <span id="boq-grand-total" class="font-black text-base text-emerald-600">0 د.ع</span>
+              </div>
+            </div>
+
+            <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800 text-[11px] text-blue-900 dark:text-blue-300">
+              <strong>مدة الإنجاز التقديرية:</strong> <span id="boq-timeline">0 يوم عمل</span>
+            </div>
+
+            <button onclick="printBOQ()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-xl transition shadow">
+              📄 تصدير جدول الكميات كتقرير رسمي
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: RETROFIT CATALOG -->
+    <section id="tab-retrofit" class="tab-content hidden space-y-6">
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-5 flex flex-wrap justify-between items-center gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">دليل التدخلات والمعالجات المعمارية السريعة (Retrofitting Catalog)</h2>
+            <p class="text-xs text-slate-500">حلول منخفضة ومتوسطة التكلفة لمعالجة العوائق الإنشائية في المباني العراقية القائمة دون هدم.</p>
+          </div>
+          <!-- Filter Buttons -->
+          <div class="flex flex-wrap gap-1 text-xs font-semibold">
+            <button onclick="filterRetrofit('all')" class="rf-filter active px-2.5 py-1 rounded-lg bg-emerald-600 text-white">الكل</button>
+            <button onclick="filterRetrofit('entrance')" class="rf-filter px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">المداخل والسلالم</button>
+            <button onclick="filterRetrofit('doors')" class="rf-filter px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">الأبواب والعتبات</button>
+            <button onclick="filterRetrofit('bath')" class="rf-filter px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">المرافق الصحية</button>
+            <button onclick="filterRetrofit('elevators')" class="rf-filter px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">المصاعد والتوجيه</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="retrofit-cards-grid">
+          <!-- Card 1 -->
+          <div class="rf-card entrance bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 px-2 py-0.5 rounded-full">المداخل والسلالم</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">سلالم مداخل مرتفعة دون مساحة لمنحدر 1:12</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                مباني الدوائر التي ترتفع 5-8 درجات عن الرصيف مع واجهة ضيقة تمنع بناء منحدر بطول 10 أمتار.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة السريعة:</div>
+                <div class="text-slate-700 dark:text-slate-300">تركيب مصعد منصة هيدروليكي رأسي (Vertical Platform Lift) مسبق الصنع أو كرسي درج مائل مدمج.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: متوسطة</span>
+              <span>الزمن: 48 ساعة</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="rf-card doors bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 px-2 py-0.5 rounded-full">الأبواب والفتحات</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">أبواب ضيقة (75-80 سم) يتعذر تكسير جدرانها</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                جدران خرسانية حاملة يصعب توسيع فتحاتها المعمارية إلى 90 سم.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة السريعة:</div>
+                <div class="text-slate-700 dark:text-slate-300">استبدال المفصلات بمفصلات الإزاحة التامة (Swing-Clear Hinges) لزيادة العرض الصافي بمقدار 5 سم فورياً دون تكسير.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: اقتصادية جداً</span>
+              <span>الزمن: ساعة واحدة</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="rf-card doors bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 px-2 py-0.5 rounded-full">العتبات والأرضيات</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">عتبات رخامية أو خشبية بارزة عند الأبواب</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                عتبات بارتفاع 3-5 سم تعيق عجلات الكراسي وتسبب تعثر وسقوط كبار السن.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة السريعة:</div>
+                <div class="text-slate-700 dark:text-slate-300">تثبيت منحدر عتبة مطاطي أو ألمنيوم مشطوف الجانبين (Modular Threshold Ramp) يتم لصقه مباشرة فوق العتبة.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: اقتصادية</span>
+              <span>الزمن: 30 دقيقة</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="rf-card bath bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 px-2 py-0.5 rounded-full">المرافق الصحية</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">كبائن حمامات ضيقة لا تسمح بدوران الكرسي</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                حمامات بمساحة 1×1.2 م تحرم مستخدم الكرسي من الدخول وقفل الباب.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة السريعة:</div>
+                <div class="text-slate-700 dark:text-slate-300">دمج كابينتين بإزالة القاطع المشترك، استخدام باب جرار خارجي، وتركيب مساند قابلة للطي ومغسلة معلقة.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: متوسطة</span>
+              <span>الزمن: 3 أيام</span>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="rf-card elevators bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 px-2 py-0.5 rounded-full">المصاعد والتوجيه</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">أزرار مصاعد ملساء دون لغة برايل أو إعلان صوتي</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                مصاعد تعمل بصورة سليمة ولكنها تحرم المكفوفين من الاستقلالية ومعرفة الطوابق.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة السريعة:</div>
+                <div class="text-slate-700 dark:text-slate-300">لصق كبسولات برايل معدنية بارزة، وربط وحدة إعلان صوتي رقمية مدمجة تعلن عن الأدوار تلقائياً.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: منخفضة</span>
+              <span>الزمن: ساعتان</span>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="rf-card entrance bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 px-2 py-0.5 rounded-full">الأرضيات والبهو</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">غياب مسارات المكفوفين اللمسية بالأرضيات</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                بهو رخامي واسع يصعب تكسير بلاطه لزرع بلاط التوجيه المضلع.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة السريعة:</div>
+                <div class="text-slate-700 dark:text-slate-300">تثبيت مسامير وشرائط ستانلس ستيل مضلعة وبارزة فوق البلاط القائم بمواد لاصقة فائقة الثبات.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: متوسطة</span>
+              <span>الزمن: يوم واحد</span>
+            </div>
+          </div>
+
+          <!-- Card 7 (New: Concealed Cisterns & Corner Sinks) -->
+          <div class="rf-card bath bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 px-2 py-0.5 rounded-full">المرافق الصحية</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">صناديق الطرد المخفية والمغاسل الركنية</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                استغلال زوايا الحمام وسماكة الجدار لدمج نظام الطرد المخفي، مما يوفر 15-20 سم من عمق المرحاض لصالح مناورة الكرسي.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة الهندسية:</div>
+                <div class="text-slate-700 dark:text-slate-300">تركيب خزان طرد مدمج (Concealed Cistern) ومغسلة ركنية معلقة خالية سفلياً لتحرير مركز الفراغ.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: متوسطة</span>
+              <span>الزمن: 48 ساعة</span>
+            </div>
+          </div>
+
+          <!-- Card 8 (New: Space Borrowing - Unisex Accessible Toilet) -->
+          <div class="rf-card bath bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 px-2 py-0.5 rounded-full">استحداث فضاء بديل</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">دورة مياه ميسرة للجنسين (Unisex)</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                عند استحالة هدم الجدران الحاملة في حمامات الموظفين القديمة، يتم تحويل مخزن أسفل الدرج أو غرفة أرشيف متقادمة إلى حمام مستقل شامل.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة الهندسية:</div>
+                <div class="text-slate-700 dark:text-slate-300">استحداث فضاء 2×2 م يخدم الجنسين معاً دون الحاجة لتوسيع حمامات الرجال والنساء المنفصلة.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: متوسطة</span>
+              <span>الزمن: 5 أيام</span>
+            </div>
+          </div>
+
+          <!-- Card 9 (New: Door Kinematics) -->
+          <div class="rf-card doors bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 px-2 py-0.5 rounded-full">كينماتيكا الأبواب</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">أبواب سحاب علوية (Sliding Doors)</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                قوس فتح الباب نحو الداخل يلتهم قرابة 1.0 م² من مساحة الحركة؛ تحويله لباب سحاب علوي يحرر كامل المساحة للأجهزة الصحية.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة الهندسية:</div>
+                <div class="text-slate-700 dark:text-slate-300">تركيب مسار معدني علوي معلق دون أي مجرى أرضي يسبب عتبات تعيق الكرسي المتحرك.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: اقتصادية</span>
+              <span>الزمن: 3 ساعات</span>
+            </div>
+          </div>
+
+          <!-- Card 10 (New: BIM & Clash Detection) -->
+          <div class="rf-card bath bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 px-2 py-0.5 rounded-full">النمذجة الرقمية BIM</span>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-2 mb-1">المحاكاة الفراغية وتتبع شبكات الصرف</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
+                رفع المبنى القديم ثلاثياً واكتشاف التعارضات (Clash Detection) مع شبكات الصرف الرأسية (Plumbing Stacks) قبل المباشرة بأي أعمال هدم.
+              </p>
+              <div class="bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="text-emerald-600 font-bold text-[11px] mb-0.5">✓ المعالجة الهندسية:</div>
+                <div class="text-slate-700 dark:text-slate-300">اختبار بدائل التوزيع ومسار دوران الكراسي لضمان الحفاظ على مواقع أنابيب الصرف الرئيسية.</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>الكلفة: استشارية</span>
+              <span>الزمن: قبل الهدم</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: LIBRARY & LEGISLATION -->
+    <section id="tab-library" class="tab-content hidden space-y-6">
+      <div class="bg-[var(--card,#fff)] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-5">
+          <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">المكتبة الرقمية وحزمة المستندات الرسمية</h2>
+          <p class="text-xs text-slate-500">تحميل والاطلاع على الوثائق والمذكرات وجداول التدقيق الهندسية المعتمدة.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50 dark:bg-slate-900 flex flex-col justify-between">
+            <div>
+              <div class="text-2xl mb-2">📜</div>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">المسوّدة الكاملة لمواد الكود الوطني</h3>
+              <p class="text-xs text-slate-500 leading-relaxed mb-3">
+                الوثيقة الهندسية الشاملة بـ 4 أبواب و8 فصول تتضمن المعايير الدقيقة، المتطلبات الإلزامية، والتفاصيل المقاومة للحريق والمناخ العراقي.
+              </p>
+            </div>
+            <a href="http://localhost:8080/iraqi_accessible_building_code.md" target="_blank" class="text-xs text-emerald-600 font-bold hover:underline">فتح الملف: iraqi_accessible_building_code.md ↗</a>
+          </div>
+
+          <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50 dark:bg-slate-900 flex flex-col justify-between">
+            <div>
+              <div class="text-2xl mb-2">🏛️</div>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">المذكرة الوزارية الرسمية</h3>
+              <p class="text-xs text-slate-500 leading-relaxed mb-3">
+                صيغة إدارية موجهة لمعالي وزير الإعمار والإسكان وأمين بغداد لإقرار الكود وإلزامه في إجازات البناء مع مهلة الـ 36 شهراً.
+              </p>
+            </div>
+            <a href="http://localhost:8080/ministerial_memorandum.md" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">فتح الملف: ministerial_memorandum.md ↗</a>
+          </div>
+
+          <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50 dark:bg-slate-900 flex flex-col justify-between">
+            <div>
+              <div class="text-2xl mb-2">📊</div>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">جدول التدقيق الهندسي (Excel / CSV)</h3>
+              <p class="text-xs text-slate-500 leading-relaxed mb-3">
+                جدول بيانات مهيكل يضم 13 بنداً مع الأوزان النسبية والمحددات القياسية، جاهز للطباعة والاستخدام الميداني.
+              </p>
+            </div>
+            <a href="http://localhost:8080/accessibility_audit_checklist.csv" target="_blank" class="text-xs text-purple-600 font-bold hover:underline">تحميل الملف: accessibility_audit_checklist.csv ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Platform Footer -->
+  <footer class="no-print mt-12 py-6 border-t border-slate-200 dark:border-slate-800 bg-[var(--card,#ffffff)] text-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 shadow-sm">
+        <span>🏛️</span>
+        <span>هذه المنصة قيد التطوير وبمبادرة شخصية من المهندس المعماري الدكتور احمد لؤي احمد</span>
+      </div>
+      <p class="text-[11px] text-slate-500">مبادرة وطنية لتيسير تطبيق مدونة البناء العراقية (م.ب.ع 202) بالتعاون مع المعايير الدولية للوصول الشامل</p>
+    </div>
+  </footer>
+
+  <!-- DIGITAL CERTIFICATE MODAL -->
+  <div id="cert-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white text-slate-900 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border-4 border-double border-emerald-700 p-8 relative">
+      <button onclick="closeCertificateModal()" class="no-print absolute top-4 left-4 text-slate-400 hover:text-slate-600 text-xl font-bold">✕</button>
+
+      <div class="text-center border-b-2 border-emerald-800 pb-4 mb-4">
+        <div class="text-xs text-slate-600 font-bold">جمهورية العراق | وزارة الإعمار والإسكان والبلديات العامة | أمانة بغداد</div>
+        <div class="text-xs text-slate-500">اللجنة الوطنية لكودات البناء - هيئة رعاية ذوي الإعاقة والاحتياجات الخاصة</div>
+        <h2 class="text-2xl font-black text-emerald-900 mt-2 tracking-wide">شهادة الامتثال لمعايير الوصول الشامل (Universal Access Certificate)</h2>
+        <p class="text-xs text-emerald-700 font-semibold mt-1" id="cert-id-date">رقم الاعتماد: IRQ-ACC-2026-0921 | تاريخ الإصدار: 2026/09/07</p>
+      </div>
+
+      <div class="space-y-3 text-sm text-slate-800">
+        <p class="leading-relaxed text-xs">
+          تُشهد اللجنة الفنية المشتركة لتدقيق كود الوصول الشامل بأن المبنى / المنشأة الموضحة بياناتها أدناه:
+        </p>
+
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 grid grid-cols-2 gap-2 text-xs">
+          <div><span class="text-slate-500 font-bold">اسم المنشأة:</span> <strong id="cert-bname">مستشفى الكرخ التعليمي</strong></div>
+          <div><span class="text-slate-500 font-bold">نوع الاستخدام:</span> <strong id="cert-btype">مستشفى أو مركز صحي</strong></div>
+          <div><span class="text-slate-500 font-bold">الموقع:</span> <strong id="cert-bloc">بغداد / الكرخ</strong></div>
+          <div><span class="text-slate-500 font-bold">المهندس الفاحص:</span> <strong id="cert-beng">م. أحمد لؤي البجاري</strong></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+          <!-- Classification Details (8 cols) -->
+          <div class="md:col-span-8 text-center py-3 px-4 bg-emerald-50 rounded-xl border-2 border-dashed border-emerald-500">
+            <div class="text-xs font-bold text-emerald-800">التصنيف الهندسي النهائي الممنوح:</div>
+            <div class="text-2xl font-black text-emerald-900 mt-0.5" id="cert-classification">الفئة الذهبية (مؤهل بالكامل - 100%)</div>
+            <div class="text-xs text-emerald-700 mt-0.5" id="cert-score-text">مستوفٍ لكافة البنود الإلزامية لمدونة م.ب.ع 202 ومتوافق كلياً مع معايير ADA 2010 الأمريكية.</div>
+          </div>
+
+          <!-- Official QR Code Box (4 cols) -->
+          <div class="md:col-span-4 flex flex-col items-center justify-center p-2.5 bg-white border border-slate-300 rounded-xl shadow-sm text-center">
+            <div id="cert-qr-container" class="w-24 h-24 flex items-center justify-center bg-white">
+              <!-- Dynamic QR SVG generated via JS -->
+            </div>
+            <div class="text-[9px] text-slate-700 font-bold mt-1">رمز التحقق الرقمي (QR)</div>
+            <div class="text-[8px] text-slate-500 font-mono" id="cert-qr-id">ID: IRQ-ACC-2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-slate-200 text-center text-xs">
+        <div>
+          <span class="font-bold text-slate-700">ممثل دائرة البلدية</span>
+          <div class="mt-8 text-slate-400">الختم والتوقيع الرسمي</div>
+        </div>
+        <div>
+          <span class="font-bold text-slate-700">ممثل نقابة المهندسين</span>
+          <div class="mt-8 text-slate-400">الختم والتوقيع الرسمي</div>
+        </div>
+        <div>
+          <span class="font-bold text-slate-700">هيئة رعاية ذوي الإعاقة</span>
+          <div class="mt-8 text-slate-400">الختم والتوقيع الرسمي</div>
+        </div>
+      </div>
+
+      <div class="no-print mt-5 flex justify-center gap-3">
+        <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-6 py-2 rounded-xl shadow">🖨️ طباعة الشهادة الرسمية</button>
+        <button onclick="closeCertificateModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-5 py-2 rounded-xl">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- ACCESSIBILITY TOOLS LOGIC ---
+    let currentFontSize = 14;
+    function changeFontSize(delta) {
+      currentFontSize = Math.min(20, Math.max(12, currentFontSize + delta));
+      document.getElementById('app-body').style.fontSize = currentFontSize + 'px';
+    }
+
+    function toggleHighContrast() {
+      document.body.classList.toggle('high-contrast');
+    }
+
+    let guideActive = false;
+    function toggleReadingGuide() {
+      guideActive = !guideActive;
+      const guide = document.getElementById('reading-guide');
+      guide.style.display = guideActive ? 'block' : 'none';
+      document.getElementById('btn-guide').classList.toggle('bg-emerald-700', guideActive);
+    }
+    window.addEventListener('mousemove', (e) => {
+      if (guideActive) {
+        document.getElementById('reading-guide').style.top = (e.clientY + 12) + 'px';
+      }
+    });
+
+    // Arabic Text-to-Speech Engine
+    let isSpeaking = false;
+    function toggleSpeech() {
+      if (!('speechSynthesis' in window)) {
+        alert("خاصية القراءة الصوتية غير مدعومة في متصفحك الحالي.");
+        return;
+      }
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        document.getElementById('speech-txt').innerText = "قراءة الصفحة صوتياً";
+        document.getElementById('speech-icon').innerText = "🔊";
+        return;
+      }
+
+      const activeTab = document.querySelector('.tab-content:not(.hidden)');
+      const textToRead = activeTab ? activeTab.innerText : document.body.innerText;
+      
+      const utterance = new SpeechSynthesisUtterance(textToRead.slice(0, 1500));
+      utterance.lang = 'ar-SA';
+      utterance.rate = 0.95;
+
+      utterance.onend = () => {
+        isSpeaking = false;
+        document.getElementById('speech-txt').innerText = "قراءة الصفحة صوتياً";
+        document.getElementById('speech-icon').innerText = "🔊";
+      };
+
+      window.speechSynthesis.speak(utterance);
+      isSpeaking = true;
+      document.getElementById('speech-txt').innerText = "إيقاف القراءة";
+      document.getElementById('speech-icon').innerText = "⏹️";
+    }
+
+    // --- TAB SWITCHING ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.className = 'tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900';
+      });
+
+      const targetSection = document.getElementById(`tab-${tabId}`);
+      const targetBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (targetSection) targetSection.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.className = 'tab-btn px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 font-bold shadow-sm';
+      }
+    }
+
+    // --- RAMP CALCULATOR ---
+    function runCalculator() {
+      const height = parseFloat(document.getElementById('calc-height').value) || 0;
+      const ratio = parseFloat(document.getElementById('calc-ratio').value) || 12;
+      const layout = document.querySelector('input[name="ramp-layout"]:checked').value;
+
+      const rampLength = (height * ratio) / 100;
+      const landings = 2 + Math.floor(rampLength / 9.0) + (layout === 'switchback' ? 1 : 0);
+      const totalFootprint = rampLength + (landings * 1.5);
+
+      const angleDeg = (Math.atan(1 / ratio) * (180 / Math.PI)).toFixed(2);
+
+      document.getElementById('res-ramp-length').innerText = rampLength.toFixed(2) + ' م';
+      document.getElementById('res-landings-count').innerText = landings + ' بسطات';
+      document.getElementById('res-total-footprint').innerText = totalFootprint.toFixed(2) + ' م';
+      document.getElementById('res-slope-angle').innerText = `الزاوية: ${angleDeg}°`;
+      document.getElementById('svg-text-ratio').innerText = `1:${ratio}`;
+    }
+
+    // --- SIMULATOR CONTROLS ---
+    let barsVisible = true;
+    let doorOutward = true;
+    let tTurnMode = false;
+
+    function toggleSimElement(elem) {
+      if (elem === 'grabBars') {
+        barsVisible = !barsVisible;
+        document.getElementById('sim-bars').style.display = barsVisible ? 'block' : 'none';
+        document.getElementById('btn-toggle-bars').classList.toggle('bg-emerald-100', barsVisible);
+      } else if (elem === 'doorSwing') {
+        doorOutward = !doorOutward;
+        const arc = document.getElementById('sim-door-arc');
+        if (doorOutward) {
+          arc.setAttribute('d', 'M 110 320 A 90 90 0 0 1 20 320');
+          arc.setAttribute('stroke', '#ef4444');
+        } else {
+          // Inward swing cuts into the 150cm circle!
+          arc.setAttribute('d', 'M 110 320 A 90 90 0 0 0 20 230');
+          arc.setAttribute('stroke', '#dc2626');
+          alert('تحذير كود البناء: فتح الباب نحو الداخل يعترض دائرة دوران الكرسي (Ø 150 سم) ويُعد مخالفة هندسية حرجة!');
+        }
+      } else if (elem === 'tTurn') {
+        tTurnMode = !tTurnMode;
+        document.getElementById('sim-circle-group').style.display = tTurnMode ? 'none' : 'block';
+        document.getElementById('sim-tturn-group').style.display = tTurnMode ? 'block' : 'none';
+        const btn = document.getElementById('btn-toggle-tturn');
+        btn.classList.toggle('bg-amber-600', tTurnMode);
+        btn.classList.toggle('text-white', tTurnMode);
+      }
+    }
+
+    // --- AUDIT SYSTEM & CHECKLIST ---
+    const auditItems = [
+      { id: 1, name: "مواقف سيارات ذوي الإعاقة", std: "عرض 3.60 م وأقرب للمدخل بمسافة ≤ 50م", ref: "م.ب.ع 202: بند 4-6/3 | ADA Sec 502", weight: 10, crit: true, pass: true, measure: "3.60 م" },
+      { id: 2, name: "مسار الرصيف والمشاة", std: "عرض صافٍ ≥ 120 سم مع منحدر رصيف 1:12", ref: "م.ب.ع 202: بند 4-2/3 | ADA Sec 403", weight: 10, crit: true, pass: true, measure: "150 سم" },
+      { id: 3, name: "منحدر المدخل الرئيسي", std: "ميل ≤ 1:12 مع درابزين مزدوج وبسطات 150 سم", ref: "م.ب.ع 202: بند 3-4 | ADA Sec 405", weight: 15, crit: true, pass: true, measure: "ميل 1:14" },
+      { id: 4, name: "أبواب الدخول الرئيسية", std: "عرض صافٍ ≥ 90 سم ومقابض رافعة بدون عتبات", ref: "م.ب.ع 202: بند 3-7 | ADA Sec 404", weight: 10, crit: true, pass: true, measure: "95 سم" },
+      { id: 5, name: "الممرات الداخلية", std: "عرض صافٍ ≥ 120 سم (150-180 سم للرئيسية)", ref: "م.ب.ع 202: بند 4-1/2 | ADA Sec 403", weight: 5, crit: false, pass: true, measure: "180 سم" },
+      { id: 6, name: "كابينة المصعد الميسر", std: "أبعاد صافية ≥ 140 × 140 سم وباب بعرض 90 سم", ref: "م.ب.ع 202: بند 6-6 | ADA Sec 407", weight: 10, crit: true, pass: true, measure: "150 × 150 سم" },
+      { id: 7, name: "لوحة أزرار وتوجيه المصعد", std: "أزرار بارتفاع 90-120 سم، لغة برايل + مؤشر صوتي", ref: "م.ب.ع 202: بند 6-5/6 | ADA Sec 407.4", weight: 5, crit: false, pass: true, measure: "متوفر" },
+      { id: 8, name: "المرافق الصحية الميسرة", std: "مساحة دوران 150 سم، مساند تثبيت، باب للخارج", ref: "م.ب.ع 202: بند 5-3 | ADA Sec 604", weight: 15, crit: true, pass: true, measure: "2.10 × 2.00 م" },
+      { id: 9, name: "زر استدعاء الطوارئ بالحمام", std: "حبل أو زر ضاغط سفلي (10 و 90 سم) بإنذار خارجي", ref: "م.ب.ع 202: بند 7-5/1 | ISO 21542", weight: 5, crit: true, pass: true, measure: "متوفر" },
+      { id: 10, name: "السلالم الاعتيادية", std: "قائمة ≤ 16 سم، نائمة ≥ 30 سم، شريط متباين", ref: "م.ب.ع 202: بند 3-5 | ADA Sec 504", weight: 3, crit: false, pass: true, measure: "15 / 30 سم" },
+      { id: 11, name: "إنذار الحريق والسلامة", std: "إنذار ضوئي ومّاض متزامن مع الصوتي", ref: "م.ب.ع 202: بند 7-5/4 | ADA Sec 702", weight: 7, crit: true, pass: true, measure: "متوفر مزدوج" },
+      { id: 12, name: "مناطق الإيواء المؤقت", std: "حيز محمي من الحريق عند الدرج مع اتصال ثنائي", ref: "م.ب.ع 202: بند 8-6/2 | ADA Sec 207", weight: 7, crit: true, pass: true, measure: "85 × 130 سم" },
+      { id: 13, name: "كاونترات الاستقبال والخدمة", std: "جزء منخفض بارتفاع 75-80 سم لمستخدمي الكراسي", ref: "م.ب.ع 202: بند 2-9/2 | ADA Sec 904", weight: 3, crit: false, pass: true, measure: "78 سم" }
+    ];
+
+    function renderAuditTable() {
+      const tbody = document.getElementById('interactive-audit-tbody');
+      tbody.innerHTML = '';
+
+      auditItems.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition";
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold text-slate-500">${item.id}</td>
+          <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">${item.name}</td>
+          <td class="p-2.5 text-slate-500">
+            <div>${item.std}</div>
+            <div class="text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-0.5 font-mono">${item.ref}</div>
+          </td>
+          <td class="p-2.5">
+            <input type="text" value="${item.measure}" onchange="auditItems[${idx}].measure = this.value" class="w-24 p-1 rounded border border-slate-300 dark:border-slate-700 text-xs bg-white dark:bg-slate-800 font-semibold">
+          </td>
+          <td class="p-2.5">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${item.crit ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}">
+              ${item.crit ? 'حرج جداً' : 'متوسط'}
+            </span>
+          </td>
+          <td class="p-2.5 text-center">
+            <select onchange="updateItemStatus(${idx}, this.value)" class="text-xs font-bold p-1 rounded border ${item.pass ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-red-50 text-red-800 border-red-300'}">
+              <option value="pass" ${item.pass ? 'selected' : ''}>مطابق ✓</option>
+              <option value="fail" ${!item.pass ? 'selected' : ''}>غير مطابق ✕</option>
+            </select>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      calcAuditScore();
+    }
+
+    function updateItemStatus(idx, val) {
+      auditItems[idx].pass = (val === 'pass');
+      renderAuditTable();
+    }
+
+    function calcAuditScore() {
+      let earned = 0;
+      let total = 0;
+      let allCritPassed = true;
+
+      auditItems.forEach(item => {
+        total += item.weight;
+        if (item.pass) {
+          earned += item.weight;
+        } else if (item.crit) {
+          allCritPassed = false;
+        }
+      });
+
+      const percent = Math.round((earned / total) * 100);
+      document.getElementById('live-audit-percent').innerText = percent + '%';
+
+      const classEl = document.getElementById('live-audit-class');
+      const noteEl = document.getElementById('live-audit-note');
+
+      if (allCritPassed && percent >= 85) {
+        classEl.innerText = 'الفئة الذهبية (مؤهل بالكامل)';
+        classEl.className = 'font-bold text-sm text-emerald-600';
+        noteEl.innerText = 'المبنى مستوفٍ لكافة البنود الحرجة ويستحق شهادة الإشغال فوراً.';
+      } else if (allCritPassed && percent >= 65) {
+        classEl.innerText = 'الفئة الفضية (مؤهل جزئياً)';
+        classEl.className = 'font-bold text-sm text-blue-600';
+        noteEl.innerText = 'يمنح رخصة مؤقتة لمدة 6 أشهر لاستكمال البنود غير الحرجة.';
+      } else {
+        classEl.innerText = 'غير مؤهل (Non-Compliant)';
+        classEl.className = 'font-bold text-sm text-red-600';
+        noteEl.innerText = 'يوجد إخفاق في بند حرج أو أكثر؛ يُحظر منح إجازة الإشغال.';
+      }
+    }
+
+    function fillSampleData(isPass) {
+      auditItems.forEach(item => { item.pass = isPass; });
+      if (!isPass) {
+        auditItems[2].pass = false; // ramp
+        auditItems[7].pass = false; // restroom
+      }
+      renderAuditTable();
+    }
+
+    // Local Storage Records Management
+    function saveAuditToStorage() {
+      const bname = document.getElementById('audit-building-name').value;
+      const bloc = document.getElementById('audit-building-loc').value;
+      const btype = document.getElementById('audit-building-type').value;
+      const score = document.getElementById('live-audit-percent').innerText;
+      const rating = document.getElementById('live-audit-class').innerText;
+      const date = new Date().toLocaleDateString('ar-IQ');
+
+      const record = { bname, bloc, btype, score, rating, date };
+      let records = JSON.parse(localStorage.getItem('iraq_accessibility_audits') || '[]');
+      records.unshift(record);
+      localStorage.setItem('iraq_accessibility_audits', JSON.stringify(records));
+      loadSavedRecords();
+      alert('✓ تم حفظ تقرير تدقيق المبنى بنجاح في السجل المحلي.');
+    }
+
+    function loadSavedRecords() {
+      const container = document.getElementById('saved-records-list');
+      const records = JSON.parse(localStorage.getItem('iraq_accessibility_audits') || '[]');
+
+      if (records.length === 0) {
+        container.innerHTML = '<div class="text-slate-400 p-2 bg-slate-50 dark:bg-slate-900 rounded">لا توجد سجلات محفوظة حتى الآن. قم بالتدقيق واضغط "حفظ في السجل المحلي".</div>';
+        return;
+      }
+
+      container.innerHTML = records.map((rec, i) => `
+        <div class="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl flex justify-between items-center">
+          <div>
+            <strong class="text-slate-800 dark:text-slate-200">${rec.bname}</strong>
+            <span class="text-slate-400 mr-2">(${rec.bloc} - ${rec.btype})</span>
+            <div class="text-[11px] text-slate-500 mt-0.5">التاريخ: ${rec.date} | النتيجة: <strong class="text-emerald-600">${rec.score}</strong> (${rec.rating})</div>
+          </div>
+          <button onclick="removeRecord(${i})" class="text-red-500 hover:text-red-700 px-2 py-1">حذف</button>
+        </div>
+      `).join('');
+    }
+
+    function removeRecord(index) {
+      let records = JSON.parse(localStorage.getItem('iraq_accessibility_audits') || '[]');
+      records.splice(index, 1);
+      localStorage.setItem('iraq_accessibility_audits', JSON.stringify(records));
+      loadSavedRecords();
+    }
+
+    function clearAuditStorage() {
+      if (confirm('هل أنت متأكد من مسح جميع التقارير المحفوظة محلياً؟')) {
+        localStorage.removeItem('iraq_accessibility_audits');
+        loadSavedRecords();
+      }
+    }
+
+    // --- PURE JS OFFLINE QR CODE GENERATOR (UTF-8 Compatible) ---
+    (function(window) {
+      function QRPolynomial(num, shift) {
+        if (num.length == undefined) throw new Error(num.length + "/" + shift);
+        var offset = 0;
+        while (offset < num.length && num[offset] == 0) offset++;
+        this.num = new Array(num.length - offset + shift);
+        for (var i = 0; i < num.length - offset; i++) this.num[i] = num[i + offset];
+      }
+      QRPolynomial.prototype = {
+        get: function(index) { return this.num[index]; },
+        getLength: function() { return this.num.length; },
+        multiply: function(e) {
+          var num = new Array(this.getLength() + e.getLength() - 1);
+          for (var i = 0; i < this.getLength(); i++) {
+            for (var j = 0; j < e.getLength(); j++) {
+              num[i + j] ^= QRMath.gmult(this.get(i), e.get(j));
+            }
+          }
+          return new QRPolynomial(num, 0);
+        },
+        mod: function(e) {
+          if (this.getLength() - e.getLength() < 0) return this;
+          var ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
+          var num = new Array(this.getLength());
+          for (var i = 0; i < this.getLength(); i++) num[i] = this.get(i);
+          for (var i = 0; i < e.getLength(); i++) {
+            num[i] ^= QRMath.gmult(e.get(i), QRMath.gexp(ratio));
+          }
+          return new QRPolynomial(num, 0).mod(e);
+        }
+      };
+
+      var QRMath = {
+        glog: function(n) {
+          if (n < 1) throw new Error("glog(" + n + ")");
+          return QRMath.LOG_TABLE[n];
+        },
+        gexp: function(n) {
+          while (n < 0) n += 255;
+          while (n >= 255) n -= 255;
+          return QRMath.EXP_TABLE[n];
+        },
+        gmult: function(a, b) {
+          if (a == 0 || b == 0) return 0;
+          return QRMath.gexp(QRMath.glog(a) + QRMath.glog(b));
+        },
+        EXP_TABLE: new Array(256),
+        LOG_TABLE: new Array(256)
+      };
+      for (var i = 0; i < 8; i++) QRMath.EXP_TABLE[i] = 1 << i;
+      for (var i = 8; i < 256; i++) QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+      for (var i = 0; i < 255; i++) QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
+
+      var QRRSBlock = {
+        RS_BLOCK_TABLE: [
+          [1, 26, 19], [1, 26, 16], [1, 26, 13], [1, 26, 9],
+          [1, 44, 34], [1, 44, 28], [1, 44, 22], [1, 44, 16],
+          [1, 70, 55], [1, 70, 44], [2, 35, 17], [2, 35, 13],
+          [1, 100, 80], [2, 50, 32], [2, 50, 24], [4, 25, 9],
+          [1, 134, 108], [2, 67, 43], [2, 33, 15, 2, 34, 16], [2, 33, 11, 2, 34, 12],
+          [2, 86, 68], [4, 43, 27], [4, 43, 19], [4, 43, 15],
+          [2, 98, 78], [4, 49, 31], [2, 32, 14, 4, 33, 15], [4, 39, 13, 1, 40, 14],
+          [2, 121, 97], [2, 60, 38, 2, 61, 39], [4, 40, 18, 2, 41, 19], [4, 40, 14, 2, 41, 15],
+          [2, 146, 116], [3, 58, 36, 2, 59, 37], [4, 36, 16, 4, 37, 17], [4, 36, 12, 4, 37, 13],
+          [2, 86, 68, 2, 87, 69], [4, 69, 43, 1, 70, 44], [6, 43, 19, 2, 44, 20], [6, 43, 15, 2, 44, 16]
+        ],
+        getRSBlocks: function(typeNumber, errorCorrectLevel) {
+          var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+          if (rsBlock == undefined) throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+          var length = rsBlock.length / 3;
+          var list = [];
+          for (var i = 0; i < length; i++) {
+            var count = rsBlock[i * 3 + 0];
+            var totalCount = rsBlock[i * 3 + 1];
+            var dataCount = rsBlock[i * 3 + 2];
+            for (var j = 0; j < count; j++) list.push({ totalCount: totalCount, dataCount: dataCount });
+          }
+          return list;
+        },
+        getRsBlockTable: function(typeNumber, errorCorrectLevel) {
+          switch (errorCorrectLevel) {
+            case 1: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+            case 0: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+            case 3: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+            case 2: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+          }
+        }
+      };
+
+      function QRBitBuffer() {
+        this.buffer = [];
+        this.length = 0;
+      }
+      QRBitBuffer.prototype = {
+        get: function(index) { return ((this.buffer[Math.floor(index / 8)] >>> (7 - index % 8)) & 1) == 1; },
+        put: function(num, length) {
+          for (var i = 0; i < length; i++) this.putBit(((num >>> (length - i - 1)) & 1) == 1);
+        },
+        putBit: function(bit) {
+          if (this.length == this.buffer.length * 8) this.buffer.push(0);
+          if (bit) this.buffer[Math.floor(this.length / 8)] |= (0x80 >>> (this.length % 8));
+          this.length++;
+        }
+      };
+
+      function QRCode(typeNumber, errorCorrectLevel) {
+        this.typeNumber = typeNumber;
+        this.errorCorrectLevel = errorCorrectLevel;
+        this.modules = null;
+        this.moduleCount = 0;
+        this.dataCache = null;
+        this.dataList = [];
+      }
+      QRCode.prototype = {
+        addData: function(data) {
+          var utf8 = [];
+          for (var i = 0; i < data.length; i++) {
+            var c = data.charCodeAt(i);
+            if (c < 0x80) utf8.push(c);
+            else if (c < 0x800) {
+              utf8.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));
+            } else if (c < 0xd800 || c >= 0xe000) {
+              utf8.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
+            } else {
+              i++;
+              c = 0x10000 + (((c & 0x3ff) << 10) | (data.charCodeAt(i) & 0x3ff));
+              utf8.push(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 0x3f), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
+            }
+          }
+          this.dataList.push({
+            mode: 4, // 8-bit byte
+            bytes: utf8,
+            getLength: function() { return utf8.length; },
+            write: function(buffer) {
+              for (var j = 0; j < utf8.length; j++) buffer.put(utf8[j], 8);
+            }
+          });
+          this.dataCache = null;
+        },
+        make: function() {
+          if (this.typeNumber < 1) {
+            var typeNumber = 1;
+            for (; typeNumber <= 10; typeNumber++) {
+              var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+              var totalDataCount = 0;
+              for (var i = 0; i < rsBlocks.length; i++) totalDataCount += rsBlocks[i].dataCount;
+              var totalBytes = totalDataCount;
+              var length = 0;
+              for (var i = 0; i < this.dataList.length; i++) {
+                length += 4 + 8 + this.dataList[i].getLength() * 8;
+              }
+              if (length <= totalBytes * 8) break;
+            }
+            if (typeNumber > 10) typeNumber = 10;
+            this.typeNumber = typeNumber;
+          }
+          this.makeImpl(false, this.getBestMaskPattern());
+        },
+        makeImpl: function(test, maskPattern) {
+          this.moduleCount = this.typeNumber * 4 + 17;
+          this.modules = new Array(this.moduleCount);
+          for (var row = 0; row < this.moduleCount; row++) {
+            this.modules[row] = new Array(this.moduleCount);
+            for (var col = 0; col < this.moduleCount; col++) this.modules[row][col] = null;
+          }
+          this.setupPositionProbePattern(0, 0);
+          this.setupPositionProbePattern(this.moduleCount - 7, 0);
+          this.setupPositionProbePattern(0, this.moduleCount - 7);
+          this.setupPositionAdjustPattern();
+          this.setupTimingPattern();
+          this.setupTypeInfo(test, maskPattern);
+          if (this.typeNumber >= 7) this.setupTypeNumber(test);
+          if (this.dataCache == null) this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+          this.mapData(this.dataCache, maskPattern);
+        },
+        setupPositionProbePattern: function(row, col) {
+          for (var r = -1; r <= 7; r++) {
+            if (row + r <= -1 || this.moduleCount <= row + r) continue;
+            for (var c = -1; c <= 7; c++) {
+              if (col + c <= -1 || this.moduleCount <= col + c) continue;
+              if ((0 <= r && r <= 6 && (c == 0 || c == 6)) || (0 <= c && c <= 6 && (r == 0 || r == 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4)) {
+                this.modules[row + r][col + c] = true;
+              } else {
+                this.modules[row + r][col + c] = false;
+              }
+            }
+          }
+        },
+        setupTimingPattern: function() {
+          for (var r = 8; r < this.moduleCount - 8; r++) {
+            if (this.modules[r][6] != null) continue;
+            this.modules[r][6] = (r % 2 == 0);
+          }
+          for (var c = 8; c < this.moduleCount - 8; c++) {
+            if (this.modules[6][c] != null) continue;
+            this.modules[6][c] = (c % 2 == 0);
+          }
+        },
+        setupPositionAdjustPattern: function() {
+          var pos = [
+            [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34],
+            [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50]
+          ][this.typeNumber - 1] || [];
+          for (var i = 0; i < pos.length; i++) {
+            for (var j = 0; j < pos.length; j++) {
+              var row = pos[i], col = pos[j];
+              if (this.modules[row][col] != null) continue;
+              for (var r = -2; r <= 2; r++) {
+                for (var c = -2; c <= 2; c++) {
+                  this.modules[row + r][col + c] = (Math.abs(r) == 2 || Math.abs(c) == 2 || (r == 0 && c == 0));
+                }
+              }
+            }
+          }
+        },
+        setupTypeNumber: function(test) {
+          var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+          for (var i = 0; i < 18; i++) {
+            var mod = (!test && ((bits >> i) & 1) == 1);
+            this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+            this.modules[i % 3 + this.moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
+          }
+        },
+        setupTypeInfo: function(test, maskPattern) {
+          var data = (this.errorCorrectLevel << 3) | maskPattern;
+          var bits = QRUtil.getBCHTypeInfo(data);
+          for (var i = 0; i < 15; i++) {
+            var mod = (!test && ((bits >> i) & 1) == 1);
+            if (i < 6) this.modules[i][8] = mod;
+            else if (i < 8) this.modules[i + 1][8] = mod;
+            else this.modules[this.moduleCount - 15 + i][8] = mod;
+
+            if (i < 8) this.modules[8][this.moduleCount - i - 1] = mod;
+            else if (i < 9) this.modules[8][15 - i - 1 + 1] = mod;
+            else this.modules[8][15 - i - 1] = mod;
+          }
+          this.modules[this.moduleCount - 8][8] = !test;
+        },
+        mapData: function(data, maskPattern) {
+          var inc = -1, row = this.moduleCount - 1, bitIndex = 7, byteIndex = 0;
+          var maskFunc = QRUtil.getMaskFunction(maskPattern);
+          for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+            if (col == 6) col--;
+            while (true) {
+              for (var c = 0; c < 2; c++) {
+                if (this.modules[row][col - c] == null) {
+                  var dark = false;
+                  if (byteIndex < data.length) dark = (((data[byteIndex] >>> bitIndex) & 1) == 1);
+                  var mask = maskFunc(row, col - c);
+                  if (mask) dark = !dark;
+                  this.modules[row][col - c] = dark;
+                  bitIndex--;
+                  if (bitIndex == -1) { byteIndex++; bitIndex = 7; }
+                }
+              }
+              row += inc;
+              if (row < 0 || this.moduleCount <= row) { row -= inc; inc = -inc; break; }
+            }
+          }
+        },
+        getBestMaskPattern: function() {
+          var minLostPoint = 0, pattern = 0;
+          for (var i = 0; i < 8; i++) {
+            this.makeImpl(true, i);
+            var lostPoint = QRUtil.getLostPoint(this);
+            if (i == 0 || minLostPoint > lostPoint) { minLostPoint = lostPoint; pattern = i; }
+          }
+          return pattern;
+        },
+        createSvg: function(cellSize, margin) {
+          cellSize = cellSize || 4;
+          margin = margin || 4;
+          var size = this.moduleCount * cellSize + margin * 2;
+          var pathD = "";
+          for (var row = 0; row < this.moduleCount; row++) {
+            for (var col = 0; col < this.moduleCount; col++) {
+              if (this.modules[row][col]) {
+                var x = col * cellSize + margin;
+                var y = row * cellSize + margin;
+                pathD += "M" + x + " " + y + "h" + cellSize + "v" + cellSize + "h-" + cellSize + "z ";
+              }
+            }
+          }
+          return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + ' ' + size + '" width="100%" height="100%" shape-rendering="crispEdges">' +
+                 '<rect width="' + size + '" height="' + size + '" fill="#ffffff"/>' +
+                 '<path fill="#0f172a" d="' + pathD + '"/>' +
+                 '</svg>';
+        }
+      };
+
+      QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+        var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+        var buffer = new QRBitBuffer();
+        for (var i = 0; i < dataList.length; i++) {
+          var data = dataList[i];
+          buffer.put(data.mode, 4);
+          buffer.put(data.getLength(), 8);
+          data.write(buffer);
+        }
+        var totalDataCount = 0;
+        for (var i = 0; i < rsBlocks.length; i++) totalDataCount += rsBlocks[i].dataCount;
+        if (buffer.length + 4 <= totalDataCount * 8) buffer.put(0, 4);
+        while (buffer.length % 8 != 0) buffer.putBit(false);
+        while (true) {
+          if (buffer.length >= totalDataCount * 8) break;
+          buffer.put(0xec, 8);
+          if (buffer.length >= totalDataCount * 8) break;
+          buffer.put(0x11, 8);
+        }
+        return QRCode.createBytes(buffer, rsBlocks);
+      };
+
+      QRCode.createBytes = function(buffer, rsBlocks) {
+        var offset = 0, maxDcCount = 0, maxEcCount = 0;
+        var dcdata = new Array(rsBlocks.length), ecdata = new Array(rsBlocks.length);
+        for (var r = 0; r < rsBlocks.length; r++) {
+          var dcCount = rsBlocks[r].dataCount;
+          var ecCount = rsBlocks[r].totalCount - dcCount;
+          maxDcCount = Math.max(maxDcCount, dcCount);
+          maxEcCount = Math.max(maxEcCount, ecCount);
+          dcdata[r] = new Array(dcCount);
+          for (var i = 0; i < dcdata[r].length; i++) dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+          offset += dcCount;
+          var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+          var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+          var modPoly = rawPoly.mod(rsPoly);
+          ecdata[r] = new Array(rsPoly.getLength() - 1);
+          for (var i = 0; i < ecdata[r].length; i++) {
+            var modIndex = i + modPoly.getLength() - ecdata[r].length;
+            ecdata[r][i] = (modIndex >= 0) ? modPoly.get(modIndex) : 0;
+          }
+        }
+        var totalCodeCount = 0;
+        for (var i = 0; i < rsBlocks.length; i++) totalCodeCount += rsBlocks[i].totalCount;
+        var data = new Array(totalCodeCount), index = 0;
+        for (var i = 0; i < maxDcCount; i++) {
+          for (var r = 0; r < rsBlocks.length; r++) {
+            if (i < dcdata[r].length) data[index++] = dcdata[r][i];
+          }
+        }
+        for (var i = 0; i < maxEcCount; i++) {
+          for (var r = 0; r < rsBlocks.length; r++) {
+            if (i < ecdata[r].length) data[index++] = ecdata[r][i];
+          }
+        }
+        return data;
+      };
+
+      var QRUtil = {
+        getBCHTypeInfo: function(data) {
+          var d = data << 10;
+          while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(1335) >= 0) {
+            d ^= (1335 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(1335)));
+          }
+          return ((data << 10) | d) ^ 21522;
+        },
+        getBCHTypeNumber: function(data) {
+          var d = data << 12;
+          while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(7973) >= 0) {
+            d ^= (7973 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(7973)));
+          }
+          return (data << 12) | d;
+        },
+        getBCHDigit: function(data) {
+          var digit = 0;
+          while (data != 0) { digit++; data >>>= 1; }
+          return digit;
+        },
+        getErrorCorrectPolynomial: function(errorCorrectLength) {
+          var a = new QRPolynomial([1], 0);
+          for (var i = 0; i < errorCorrectLength; i++) a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
+          return a;
+        },
+        getMaskFunction: function(maskPattern) {
+          switch (maskPattern) {
+            case 0: return function(i, j) { return (i + j) % 2 == 0; };
+            case 1: return function(i, j) { return i % 2 == 0; };
+            case 2: return function(i, j) { return j % 3 == 0; };
+            case 3: return function(i, j) { return (i + j) % 3 == 0; };
+            case 4: return function(i, j) { return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0; };
+            case 5: return function(i, j) { return (i * j) % 2 + (i * j) % 3 == 0; };
+            case 6: return function(i, j) { return ((i * j) % 2 + (i * j) % 3) % 2 == 0; };
+            case 7: return function(i, j) { return ((i * j) % 3 + (i + j) % 2) % 2 == 0; };
+          }
+        },
+        getLostPoint: function(qrCode) {
+          return 0; // Simple fallback
+        }
+      };
+
+      window.generateQRCodeSVG = function(text, size) {
+        try {
+          var qr = new QRCode(0, 1); // Auto version, Level L
+          qr.addData(text);
+          qr.make();
+          return qr.createSvg(4, 4);
+        } catch(e) {
+          console.error("QR Generation Error:", e);
+          return '<div class="p-2 border border-red-300 text-red-500 text-[10px]">فشل توليد الرمز</div>';
+        }
+      };
+    })(window);
+
+    // Modal Certificate
+    function openCertificateModal() {
+      calcAuditScore();
+      const bname = document.getElementById('audit-building-name').value || 'مبنى غير مسمى';
+      const bloc = document.getElementById('audit-building-loc').value || 'بغداد';
+      const btype = document.getElementById('audit-building-type').value || 'مبنى عام';
+      const beng = document.getElementById('audit-engineer-name').value || 'م. أحمد لؤي البجاري';
+
+      document.getElementById('cert-bname').innerText = bname;
+      document.getElementById('cert-bloc').innerText = bloc;
+      document.getElementById('cert-btype').innerText = btype;
+      document.getElementById('cert-beng').innerText = beng;
+
+      const percent = document.getElementById('live-audit-percent').innerText;
+      const classText = document.getElementById('live-audit-class').innerText;
+      document.getElementById('cert-classification').innerText = `${classText} - ${percent}`;
+
+      // Generate or update Certificate Reference ID & Date
+      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '/');
+      const certRef = 'IRQ-ACC-2026-' + Math.floor(1000 + Math.random() * 9000);
+      const certIdDateElem = document.getElementById('cert-id-date');
+      if (certIdDateElem) {
+        certIdDateElem.innerText = `رقم الاعتماد: ${certRef} | تاريخ الإصدار: ${today}`;
+      }
+      const certQrIdElem = document.getElementById('cert-qr-id');
+      if (certQrIdElem) {
+        certQrIdElem.innerText = `ID: ${certRef}`;
+      }
+
+      // Generate Dynamic QR Code containing inspected building & inspection data
+      const qrData = `جمهورية العراق - كود الوصول الشامل\n` +
+        `رقم الاعتماد: ${certRef}\n` +
+        `اسم المنشأة: ${bname}\n` +
+        `الموقع: ${bloc}\n` +
+        `نوع الاستخدام: ${btype}\n` +
+        `المهندس الفاحص: ${beng}\n` +
+        `نسبة الامتثال: ${percent} (${classText})\n` +
+        `تاريخ الفحص: ${today}\n` +
+        `المرجع: مدونة م.ب.ع 202 & كود ADA 2010`;
+
+      const qrContainer = document.getElementById('cert-qr-container');
+      if (qrContainer && window.generateQRCodeSVG) {
+        qrContainer.innerHTML = window.generateQRCodeSVG(qrData, 96);
+      }
+
+      document.getElementById('cert-modal').classList.remove('hidden');
+    }
+
+    function closeCertificateModal() {
+      document.getElementById('cert-modal').classList.add('hidden');
+    }
+
+    // --- BOQ ESTIMATOR LOGIC ---
+    const boqItems = [
+      { id: 1, name: "إنشاء منحدر خرساني مكسو بالغرانيت المانع للانزلاق مع درابزين مزدوج", unit: "متر طولي", price: 185000, qty: 12, days: 5 },
+      { id: 2, name: "توريد وتركيب مصعد منصة رأسي هيدروليكي (Vertical Lift)", unit: "عدد", price: 14500000, qty: 1, days: 4 },
+      { id: 3, name: "توريد وتركيب كرسي درج مائل قابل للطي (Stairlift)", unit: "عدد", price: 6200000, qty: 0, days: 2 },
+      { id: 4, name: "تأهيل دورة مياه نموذجية (دمج كابينتين، مساند، مغسلة، باب جرار)", unit: "مرفق", price: 3400000, qty: 2, days: 6 },
+      { id: 5, name: "استبدال مفصلات بمفصلات إزاحة تامة (Swing-Clear Hinges)", unit: "باب", price: 65000, qty: 8, days: 1 },
+      { id: 6, name: "منحدرات عتبات مطاطية / ألمنيوم مشطوفة للأبواب", unit: "عتبة", price: 45000, qty: 10, days: 1 },
+      { id: 7, name: "تثبيت بلاط لمسي توجيهي للمكفوفين (Tactile Paving)", unit: "م2", price: 55000, qty: 30, days: 2 },
+      { id: 8, name: "كبسولات أزرار برايل ناطقة للمصاعد", unit: "مصعد", price: 350000, qty: 2, days: 1 },
+      { id: 9, name: "إنذار حريق ضوئي ومّاض (Strobe Lights)", unit: "نقطة", price: 120000, qty: 14, days: 2 }
+    ];
+
+    function renderBOQTable() {
+      const tbody = document.getElementById('boq-items-tbody');
+      tbody.innerHTML = '';
+
+      boqItems.forEach((item, idx) => {
+        const totalItem = item.price * item.qty;
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition";
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">${item.name}</td>
+          <td class="p-2.5 text-slate-500">${item.unit}</td>
+          <td class="p-2.5">${item.price.toLocaleString()} د.ع</td>
+          <td class="p-2.5 text-center">
+            <input type="number" min="0" value="${item.qty}" oninput="updateBOQQty(${idx}, this.value)" class="w-16 p-1 text-center font-bold rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs">
+          </td>
+          <td class="p-2.5 text-left font-black text-emerald-600">${totalItem.toLocaleString()} د.ع</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      calcBOQTotals();
+    }
+
+    function updateBOQQty(idx, val) {
+      boqItems[idx].qty = Math.max(0, parseInt(val) || 0);
+      renderBOQTable();
+    }
+
+    function calcBOQTotals() {
+      let subtotal = 0;
+      let maxDays = 0;
+
+      boqItems.forEach(item => {
+        if (item.qty > 0) {
+          subtotal += item.price * item.qty;
+          maxDays = Math.max(maxDays, item.days * Math.ceil(item.qty / 3));
+        }
+      });
+
+      const contingency = Math.round(subtotal * 0.10);
+      const grandTotal = subtotal + contingency;
+
+      document.getElementById('boq-subtotal').innerText = subtotal.toLocaleString() + ' د.ع';
+      document.getElementById('boq-contingency').innerText = contingency.toLocaleString() + ' د.ع';
+      document.getElementById('boq-grand-total').innerText = grandTotal.toLocaleString() + ' د.ع';
+      document.getElementById('boq-timeline').innerText = (maxDays > 0 ? maxDays + 3 : 0) + ' يوم عمل تقريبياً';
+    }
+
+    function resetBOQ() {
+      boqItems.forEach(i => i.qty = 0);
+      renderBOQTable();
+    }
+
+    function printBOQ() {
+      window.print();
+    }
+
+    // --- RETROFIT FILTERING ---
+    function filterRetrofit(category) {
+      document.querySelectorAll('.rf-filter').forEach(btn => {
+        btn.className = 'rf-filter px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+      });
+      event.target.className = 'rf-filter active px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold';
+
+      document.querySelectorAll('.rf-card').forEach(card => {
+        if (category === 'all' || card.classList.contains(category)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // --- ONLOAD INITIALIZATION ---
+    window.onload = () => {
+      runCalculator();
+      renderAuditTable();
+      renderBOQTable();
+      loadSavedRecords();
+    };
+  </script>
+</body>
+</html>
