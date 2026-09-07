@@ -34,6 +34,35 @@ st.markdown("""
         background-color: #065f46;
         color: white;
     }
+    
+    /* Move Streamlit sidebar to the RIGHT side (RTL Layout) */
+    [data-testid="stAppViewContainer"] {
+        flex-direction: row-reverse !important;
+    }
+    [data-testid="stSidebar"] {
+        border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+        border-right: none !important;
+        direction: rtl !important;
+        text-align: right !important;
+    }
+    [data-testid="stSidebar"] * {
+        direction: rtl !important;
+        text-align: right !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] {
+        left: auto !important;
+        right: 0.75rem !important;
+        transform: scaleX(-1) !important;
+    }
+    [data-testid="stSidebarCollapseButton"] {
+        transform: scaleX(-1) !important;
+    }
+    @media (max-width: 991px) {
+        [data-testid="stSidebar"] {
+            right: 0 !important;
+            left: auto !important;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
