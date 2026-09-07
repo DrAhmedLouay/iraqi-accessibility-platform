@@ -497,26 +497,58 @@
         </div>
 
         <!-- Facility Details Form -->
+        <!-- TRACK SELECTOR TOGGLE (Pre-Construction vs Existing Buildings) -->
+        <div class="mb-5 p-4 rounded-2xl bg-gradient-to-r from-emerald-950/20 via-slate-900/10 to-blue-950/20 border-2 border-emerald-500/30">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2">
+            <div>
+              <span class="text-xs font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+                <span>🎯</span>
+                <span>تحديد المسار الهندسي لعملية التدقيق والاعتماد:</span>
+              </span>
+              <p class="text-[11.5px] text-slate-500 dark:text-slate-400 mt-0.5">
+                اختر نوع المسار لتكييف معايير الفحص ووثيقة الاعتماد الصادرة:
+              </p>
+            </div>
+            <div class="inline-flex p-1 bg-slate-200 dark:bg-slate-800 rounded-xl border border-slate-300 dark:border-slate-700 shadow-inner">
+              <button id="track-btn-pre" onclick="setAuditTrack('pre_construction')" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 text-white shadow">
+                <span>📐</span>
+                <span>مشاريع قيد التصميم (قبل الإنشاء)</span>
+              </button>
+              <button id="track-btn-exist" onclick="setAuditTrack('existing')" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                <span>🏢</span>
+                <span>مبانٍ قائمة (تدقيق وتأهيل Retrofit)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Track Notice Banner -->
+          <div id="track-banner" class="mt-2 p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-900 dark:text-emerald-200 text-xs flex items-center gap-2">
+            <span class="text-base">ℹ️</span>
+            <span id="track-banner-text"><strong>مسار المخططات قبل الإنشاء:</strong> معايير إلزامية صارمة 100% بدون أي استثناءات، لاعتماد المخططات ومنح إجازة البناء. أي إخفاق يستوجب تصحيحات معمارية (Design Redlines) قبل الترخيص.</span>
+          </div>
+        </div>
+
+        <!-- Facility Details Form -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 bg-slate-50 dark:bg-slate-900 rounded-xl mb-5 border border-slate-200 dark:border-slate-800 text-xs">
           <div>
-            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المبنى / المنشأة:</span>
-            <input type="text" id="audit-building-name" value="مستشفى الكرخ التعليمي - العيادات الاستشارية" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1" id="lbl-audit-bname">اسم المشروع المعماري:</span>
+            <input type="text" id="audit-building-name" value="مشروع المجمع الحكومي النموذجي" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
           </div>
           <div>
-            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المحافظة والمنطقة:</span>
-            <input type="text" id="audit-building-loc" value="بغداد / الكرخ" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1" id="lbl-audit-bloc">المحافظة وموقع المشروع:</span>
+            <input type="text" id="audit-building-loc" value="بغداد / الرصافة" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
           </div>
           <div>
-            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع الإشغال:</span>
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1" id="lbl-audit-btype">نوع الاستخدام والتصنيف:</span>
             <select id="audit-building-type" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
+              <option>مبنى حكومي وخدمي</option>
               <option>مستشفى أو مركز صحي</option>
-              <option>دائرة حكومية وخدمية</option>
               <option>مؤسسة تعليمية / جامعة</option>
               <option>مجمع تجاري واستثماري</option>
             </select>
           </div>
           <div>
-            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم المهندس الفاحص:</span>
+            <span class="block font-bold text-slate-700 dark:text-slate-300 mb-1" id="lbl-audit-beng">المكتب الاستشاري / المصمم:</span>
             <input type="text" id="audit-engineer-name" value="م. أحمد لؤي البجاري" class="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold">
           </div>
         </div>
@@ -912,20 +944,20 @@
       <div class="text-center border-b-2 border-emerald-800 pb-4 mb-4">
         <div class="text-xs text-slate-600 font-bold">جمهورية العراق | وزارة الإعمار والإسكان والبلديات العامة | أمانة بغداد</div>
         <div class="text-xs text-slate-500">اللجنة الوطنية لكودات البناء - هيئة رعاية ذوي الإعاقة والاحتياجات الخاصة</div>
-        <h2 class="text-2xl font-black text-emerald-900 mt-2 tracking-wide">شهادة الامتثال لمعايير الوصول الشامل (Universal Access Certificate)</h2>
+        <h2 class="text-2xl font-black text-emerald-900 mt-2 tracking-wide" id="cert-title">شهادة الامتثال لمعايير الوصول الشامل (Universal Access Certificate)</h2>
         <p class="text-xs text-emerald-700 font-semibold mt-1" id="cert-id-date">رقم الاعتماد: IRQ-ACC-2026-0921 | تاريخ الإصدار: 2026/09/07</p>
       </div>
 
       <div class="space-y-3 text-sm text-slate-800">
-        <p class="leading-relaxed text-xs">
+        <p class="leading-relaxed text-xs" id="cert-intro-text">
           تُشهد اللجنة الفنية المشتركة لتدقيق كود الوصول الشامل بأن المبنى / المنشأة الموضحة بياناتها أدناه:
         </p>
 
         <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 grid grid-cols-2 gap-2 text-xs">
-          <div><span class="text-slate-500 font-bold">اسم المنشأة:</span> <strong id="cert-bname">مستشفى الكرخ التعليمي</strong></div>
+          <div><span class="text-slate-500 font-bold" id="cert-lbl-bname">اسم المنشأة:</span> <strong id="cert-bname">مستشفى الكرخ التعليمي</strong></div>
           <div><span class="text-slate-500 font-bold">نوع الاستخدام:</span> <strong id="cert-btype">مستشفى أو مركز صحي</strong></div>
           <div><span class="text-slate-500 font-bold">الموقع:</span> <strong id="cert-bloc">بغداد / الكرخ</strong></div>
-          <div><span class="text-slate-500 font-bold">المهندس الفاحص:</span> <strong id="cert-beng">م. أحمد لؤي البجاري</strong></div>
+          <div><span class="text-slate-500 font-bold" id="cert-lbl-beng">المهندس الفاحص:</span> <strong id="cert-beng">م. أحمد لؤي البجاري</strong></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
@@ -1131,21 +1163,64 @@
     }
 
     // --- AUDIT SYSTEM & CHECKLIST ---
+    let currentAuditTrack = 'pre_construction'; // 'pre_construction' | 'existing'
+
     const auditItems = [
       { id: 1, name: "مواقف سيارات ذوي الإعاقة", std: "عرض 3.60 م وأقرب للمدخل بمسافة ≤ 50م", ref: "م.ب.ع 202: بند 4-6/3 | ADA Sec 502", weight: 10, crit: true, pass: true, measure: "3.60 م" },
       { id: 2, name: "مسار الرصيف والمشاة", std: "عرض صافٍ ≥ 120 سم مع منحدر رصيف 1:12", ref: "م.ب.ع 202: بند 4-2/3 | ADA Sec 403", weight: 10, crit: true, pass: true, measure: "150 سم" },
-      { id: 3, name: "منحدر المدخل الرئيسي", std: "ميل ≤ 1:12 مع درابزين مزدوج وبسطات 150 سم", ref: "م.ب.ع 202: بند 3-4 | ADA Sec 405", weight: 15, crit: true, pass: true, measure: "ميل 1:14" },
-      { id: 4, name: "أبواب الدخول الرئيسية", std: "عرض صافٍ ≥ 90 سم ومقابض رافعة بدون عتبات", ref: "م.ب.ع 202: بند 3-7 | ADA Sec 404", weight: 10, crit: true, pass: true, measure: "95 سم" },
+      { id: 3, name: "منحدر المدخل الرئيسي", std: "منحدر بميل 1:12 إلى 1:16 إلزامي، بسطات 150 سم (يمنع أي استثناء في مرحلة التصميم)", ref: "م.ب.ع 202: بند 3-4 | ADA Sec 405", weight: 15, crit: true, pass: true, measure: "ميل 1:14" },
+      { id: 4, name: "أبواب الدخول الرئيسية", std: "أبواب بعرض صافٍ ≥ 90 سم ومقابض رافعة خالية كلياً من العتبات الأرضية", ref: "م.ب.ع 202: بند 3-7 | ADA Sec 404", weight: 10, crit: true, pass: true, measure: "95 سم" },
       { id: 5, name: "الممرات الداخلية", std: "عرض صافٍ ≥ 120 سم (150-180 سم للرئيسية)", ref: "م.ب.ع 202: بند 4-1/2 | ADA Sec 403", weight: 5, crit: false, pass: true, measure: "180 سم" },
       { id: 6, name: "كابينة المصعد الميسر", std: "أبعاد صافية ≥ 140 × 140 سم وباب بعرض 90 سم", ref: "م.ب.ع 202: بند 6-6 | ADA Sec 407", weight: 10, crit: true, pass: true, measure: "150 × 150 سم" },
       { id: 7, name: "لوحة أزرار وتوجيه المصعد", std: "أزرار بارتفاع 90-120 سم، لغة برايل + مؤشر صوتي", ref: "م.ب.ع 202: بند 6-5/6 | ADA Sec 407.4", weight: 5, crit: false, pass: true, measure: "متوفر" },
-      { id: 8, name: "المرافق الصحية الميسرة", std: "مساحة دوران 150 سم، مساند تثبيت، باب للخارج", ref: "م.ب.ع 202: بند 5-3 | ADA Sec 604", weight: 15, crit: true, pass: true, measure: "2.10 × 2.00 م" },
+      { id: 8, name: "المرافق الصحية الميسرة", std: "فضاء صافٍ 2.0 × 2.0 م إلزامي، مع دائرة دوران حرة Ø 150 سم كاملة ومساند ثنائية", ref: "م.ب.ع 202: بند 5-3 | ADA Sec 604", weight: 15, crit: true, pass: true, measure: "2.10 × 2.00 م" },
       { id: 9, name: "زر استدعاء الطوارئ بالحمام", std: "حبل أو زر ضاغط سفلي (10 و 90 سم) بإنذار خارجي", ref: "م.ب.ع 202: بند 7-5/1 | ISO 21542", weight: 5, crit: true, pass: true, measure: "متوفر" },
       { id: 10, name: "السلالم الاعتيادية", std: "قائمة ≤ 16 سم، نائمة ≥ 30 سم، شريط متباين", ref: "م.ب.ع 202: بند 3-5 | ADA Sec 504", weight: 3, crit: false, pass: true, measure: "15 / 30 سم" },
       { id: 11, name: "إنذار الحريق والسلامة", std: "إنذار ضوئي ومّاض متزامن مع الصوتي", ref: "م.ب.ع 202: بند 7-5/4 | ADA Sec 702", weight: 7, crit: true, pass: true, measure: "متوفر مزدوج" },
       { id: 12, name: "مناطق الإيواء المؤقت", std: "حيز محمي من الحريق عند الدرج مع اتصال ثنائي", ref: "م.ب.ع 202: بند 8-6/2 | ADA Sec 207", weight: 7, crit: true, pass: true, measure: "85 × 130 سم" },
       { id: 13, name: "كاونترات الاستقبال والخدمة", std: "جزء منخفض بارتفاع 75-80 سم لمستخدمي الكراسي", ref: "م.ب.ع 202: بند 2-9/2 | ADA Sec 904", weight: 3, crit: false, pass: true, measure: "78 سم" }
     ];
+
+    function setAuditTrack(track) {
+      currentAuditTrack = track;
+      const btnPre = document.getElementById('track-btn-pre');
+      const btnExist = document.getElementById('track-btn-exist');
+      const banner = document.getElementById('track-banner');
+      const bannerText = document.getElementById('track-banner-text');
+
+      const lblBname = document.getElementById('lbl-audit-bname');
+      const lblBloc = document.getElementById('lbl-audit-bloc');
+      const lblBeng = document.getElementById('lbl-audit-beng');
+
+      if (track === 'pre_construction') {
+        if (btnPre) btnPre.className = 'px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 text-white shadow';
+        if (btnExist) btnExist.className = 'px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-slate-900';
+        if (banner) banner.className = 'mt-2 p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-900 dark:text-emerald-200 text-xs flex items-center gap-2';
+        if (bannerText) bannerText.innerHTML = '<strong>مسار المخططات قبل الإنشاء:</strong> معايير إلزامية صارمة 100% بدون أي استثناءات، لاعتماد المخططات ومنح إجازة البناء. أي إخفاق يستوجب تصحيحات معمارية (Design Redlines) قبل الترخيص.';
+
+        if (lblBname) lblBname.innerText = 'اسم المشروع المعماري المقترح:';
+        if (lblBloc) lblBloc.innerText = 'المحافظة وموقع المشروع:';
+        if (lblBeng) lblBeng.innerText = 'المكتب الاستشاري / المعماري المصمم:';
+
+        auditItems[2].std = "منحدر بميل 1:12 إلى 1:16 إلزامي، بسطات 150 سم (يمنع أي استثناء في مرحلة التصميم)";
+        auditItems[3].std = "أبواب بعرض صافٍ ≥ 90 سم ومقابض رافعة خالية كلياً من العتبات الأرضية";
+        auditItems[7].std = "فضاء صافٍ 2.0 × 2.0 م إلزامي، دائرة دوران حرة 150 سم كاملة (360°)";
+      } else {
+        if (btnPre) btnPre.className = 'px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-slate-900';
+        if (btnExist) btnExist.className = 'px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-amber-600 text-white shadow';
+        if (banner) banner.className = 'mt-2 p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 text-xs flex items-center gap-2';
+        if (bannerText) bannerText.innerHTML = '<strong>مسار تأهيل المباني القائمة:</strong> تفعيل رخص التسامح الهندسي والاستثناءات المكانية (الدمج الفراغي، مفصلات Swing-Clear، مصاعد المنصات) مع ربط التدخلات بجدول التخمين BOQ.';
+
+        if (lblBname) lblBname.innerText = 'اسم المنشأة القائمة المفحوصة:';
+        if (lblBloc) lblBloc.innerText = 'المحافظة والعنوان الإداري:';
+        if (lblBeng) lblBeng.innerText = 'المهندس الفاحص الميداني:';
+
+        auditItems[2].std = "منحدر خارجي أو مصعد منصة هيدروليكي رأسي أو كرسي درج مائل بديل";
+        auditItems[3].std = "عرض صافٍ ≥ 85 سم، أو استبدال بمفصلات إزاحة تامة (Swing-Clear) مع عتبات مشطوفة";
+        auditItems[7].std = "2.0 × 2.0 م (أو دمج كابينتين)، ومناورة حرف T (150×90 سم) مقبولة كبديل عند القيود الإنشائية";
+      }
+      renderAuditTable();
+    }
 
     function renderAuditTable() {
       const tbody = document.getElementById('interactive-audit-tbody');
@@ -1206,18 +1281,30 @@
       const classEl = document.getElementById('live-audit-class');
       const noteEl = document.getElementById('live-audit-note');
 
-      if (allCritPassed && percent >= 85) {
-        classEl.innerText = 'الفئة الذهبية (مؤهل بالكامل)';
-        classEl.className = 'font-bold text-sm text-emerald-600';
-        noteEl.innerText = 'المبنى مستوفٍ لكافة البنود الحرجة ويستحق شهادة الإشغال فوراً.';
-      } else if (allCritPassed && percent >= 65) {
-        classEl.innerText = 'الفئة الفضية (مؤهل جزئياً)';
-        classEl.className = 'font-bold text-sm text-blue-600';
-        noteEl.innerText = 'يمنح رخصة مؤقتة لمدة 6 أشهر لاستكمال البنود غير الحرجة.';
+      if (currentAuditTrack === 'pre_construction') {
+        if (allCritPassed && percent === 100) {
+          classEl.innerText = 'مطابق كلياً (معتمد لإجازة البناء)';
+          classEl.className = 'font-bold text-sm text-emerald-600';
+          noteEl.innerText = 'المخططات التصميمية مستوفية 100% لاشتراطات الوصول الشامل وتُعتمد لمنح إجازة البناء فوراً.';
+        } else {
+          classEl.innerText = 'مخالف لاشتراطات الترخيص (ملاحظات تصحيحية)';
+          classEl.className = 'font-bold text-sm text-red-600';
+          noteEl.innerText = 'يوجد إخفاق في بنود إلزامية بالمخطط؛ يُحظر منح إجازة البناء وتُصدر ملاحظات تصحيحية (Design Redlines) للمعماري المصمم.';
+        }
       } else {
-        classEl.innerText = 'غير مؤهل (Non-Compliant)';
-        classEl.className = 'font-bold text-sm text-red-600';
-        noteEl.innerText = 'يوجد إخفاق في بند حرج أو أكثر؛ يُحظر منح إجازة الإشغال.';
+        if (allCritPassed && percent >= 85) {
+          classEl.innerText = 'الفئة الذهبية (مؤهل بالكامل - إشغال)';
+          classEl.className = 'font-bold text-sm text-emerald-600';
+          noteEl.innerText = 'المبنى القائم مستوفٍ لكافة البنود الحرجة ويستحق تجديد شهادة الإشغال فوراً.';
+        } else if (allCritPassed && percent >= 65) {
+          classEl.innerText = 'الفئة الفضية (مؤهل جزئياً - خطة تأهيل)';
+          classEl.className = 'font-bold text-sm text-blue-600';
+          noteEl.innerText = 'يمنح رخصة مؤقتة مشروطة بتنفيذ جدول كميات التأهيل (BOQ) خلال المهلة.';
+        } else {
+          classEl.innerText = 'غير مؤهل (يتطلب تدخلات تأهيل شاملة)';
+          classEl.className = 'font-bold text-sm text-red-600';
+          noteEl.innerText = 'يوجد عائق حرج يمنع الاستخدام الآمن؛ يلزم اعتماد خطة التدخلات السريعة.';
+        }
       }
     }
 
@@ -1689,7 +1776,8 @@
     // Modal Certificate
     function openCertificateModal() {
       calcAuditScore();
-      const bname = document.getElementById('audit-building-name').value || 'مبنى غير مسمى';
+      const isPre = (currentAuditTrack === 'pre_construction');
+      const bname = document.getElementById('audit-building-name').value || (isPre ? 'مشروع غير مسمى' : 'مبنى غير مسمى');
       const bloc = document.getElementById('audit-building-loc').value || 'بغداد';
       const btype = document.getElementById('audit-building-type').value || 'مبنى عام';
       const beng = document.getElementById('audit-engineer-name').value || 'م. أحمد لؤي البجاري';
@@ -1703,9 +1791,32 @@
       const classText = document.getElementById('live-audit-class').innerText;
       document.getElementById('cert-classification').innerText = `${classText} - ${percent}`;
 
-      // Generate or update Certificate Reference ID & Date
+      const titleElem = document.getElementById('cert-title');
+      const introElem = document.getElementById('cert-intro-text');
+      const lblEngElem = document.getElementById('cert-lbl-beng');
+      const lblBnameElem = document.getElementById('cert-lbl-bname');
+      const scoreTextElem = document.getElementById('cert-score-text');
+
       const today = new Date().toISOString().slice(0, 10).replace(/-/g, '/');
-      const certRef = 'IRQ-ACC-2026-' + Math.floor(1000 + Math.random() * 9000);
+      const certRef = isPre ?
+        ('IRQ-BP-2026-' + Math.floor(1000 + Math.random() * 9000)) :
+        ('IRQ-ACC-2026-' + Math.floor(1000 + Math.random() * 9000));
+
+      if (isPre) {
+        if (titleElem) titleElem.innerText = "شهادة مطابقة المخططات التصميمية لكود الوصول الشامل (إجازة بناء)";
+        if (introElem) introElem.innerText = "تُشهد اللجنة الهندسية لتدقيق تراخيص البناء بأن المخططات المعمارية والتنفيذية للمشروع الموضحة بياناته أدناه قد خضعت للمراجعة الفنية وتوصي باعتمادها لمنح إجازة البناء الرسمية:";
+        if (lblEngElem) lblEngElem.innerText = "المكتب / المعماري المصمم:";
+        if (lblBnameElem) lblBnameElem.innerText = "اسم المشروع:";
+        if (scoreTextElem) scoreTextElem.innerText = "مستوفٍ 100% لكافة الاشتراطات التصميمية الصارمة لمدونة م.ب.ع 202 وكود ADA 2010 بدون أي استثناءات إنشائية.";
+      } else {
+        if (titleElem) titleElem.innerText = "شهادة الفحص الميداني والامتثال لمعايير الوصول الشامل (المباني القائمة)";
+        if (introElem) introElem.innerText = "تُشهد اللجنة الفنية المشتركة لتدقيق كود الوصول الشامل بأن المبنى القائم الموضحة بياناته أدناه قد خضع للفحص الميداني والتقييم الهندسي:";
+        if (lblEngElem) lblEngElem.innerText = "المهندس الفاحص:";
+        if (lblBnameElem) lblBnameElem.innerText = "اسم المنشأة:";
+        if (scoreTextElem) scoreTextElem.innerText = "معتمد استناداً إلى معايير مدونة م.ب.ع 202 ورخص التسامح الهندسي المعتمدة للأبنية القائمة.";
+      }
+
+      // Generate or update Certificate Reference ID & Date
       const certIdDateElem = document.getElementById('cert-id-date');
       if (certIdDateElem) {
         certIdDateElem.innerText = `رقم الاعتماد: ${certRef} | تاريخ الإصدار: ${today}`;
@@ -1715,14 +1826,16 @@
         certQrIdElem.innerText = `ID: ${certRef}`;
       }
 
-      // Generate Dynamic QR Code containing inspected building & inspection data
-      const qrData = `جمهورية العراق - كود الوصول الشامل\n` +
+      // Generate Dynamic QR Code containing track specific info
+      const trackName = isPre ? "تدقيق تصاميم جديدة قبل الإنشاء (إجازة بناء)" : "فحص وتأهيل مبنى قائم (شهادة إشغال وتأهيل)";
+      const qrData = `جمهورية العراق - اعتماد الوصول الشامل\n` +
+        `المسار: ${trackName}\n` +
         `رقم الاعتماد: ${certRef}\n` +
-        `اسم المنشأة: ${bname}\n` +
+        `المشروع / المنشأة: ${bname}\n` +
         `الموقع: ${bloc}\n` +
         `نوع الاستخدام: ${btype}\n` +
-        `المهندس الفاحص: ${beng}\n` +
-        `نسبة الامتثال: ${percent} (${classText})\n` +
+        `${isPre ? 'المعماري المصمم' : 'المهندس الفاحص'}: ${beng}\n` +
+        `النتيجة: ${classText} (${percent})\n` +
         `تاريخ الفحص: ${today}\n` +
         `المرجع: مدونة م.ب.ع 202 & كود ADA 2010`;
 
