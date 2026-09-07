@@ -52,6 +52,7 @@ with st.sidebar:
     st.markdown("**مبنية استناداً إلى:**")
     st.markdown("- 📜 مدونة متطلبات المعاقين العراقية (`م.ب.ع 202`)")
     st.markdown("- 🇺🇸 المعايير الأمريكية للتصميم المتاح (`ADA 2010`)")
+    st.markdown("- 🧪 مختبر المحاكاة الهندسية (7 محاكيات تفاعلية 2D)")
     st.divider()
 
     st.markdown("#### 📂 تحميل الوثائق الهندسية الرسمية:")
@@ -110,6 +111,6 @@ html_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "iraqi_acce
 if os.path.exists(html_path):
     with open(html_path, "r", encoding="utf-8") as f:
         html_content = f.read()
-    components.html(html_content, height=1150, scrolling=True)
+    components.html(html_content, height=1250, scrolling=True)
 else:
     st.error("تعذر العثور على ملف المنصة التفاعلية iraqi_accessibility_platform.html")
