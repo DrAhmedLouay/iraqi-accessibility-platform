@@ -38,8 +38,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Sidebar with platform information, credits, and document downloads
+current_dir = os.path.dirname(os.path.abspath(__file__))
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/f/f6/Coat_of_arms_of_Iraq_%282008%E2%80%93present%29.svg", width=90)
+    logo_path = os.path.join(current_dir, "platform_logo.jpg")
+    if os.path.exists(logo_path):
+        st.image(logo_path, width=140)
+    else:
+        st.image("https://upload.wikimedia.org/wikipedia/commons/f/f6/Coat_of_arms_of_Iraq_%282008%E2%80%93present%29.svg", width=90)
     st.markdown("### 🏛️ جمهورية العراق")
     st.markdown("#### منصة كود الوصول الشامل والتصميم الدامج")
     st.markdown("**مبنية استناداً إلى:**")
