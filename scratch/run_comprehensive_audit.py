@@ -30,7 +30,7 @@ def run_audit_and_fix():
         html = f.read()
 
     # Check if GIS Map already injected or needs injection
-    if 'id="iraq-gis-svg"' not in html:
+    if 'id="iraq-leaflet-map"' not in html:
         print("-> GIS Map not yet injected. Injecting into Tab 1...")
         start_marker = '      <!-- GOVERNORATES READINESS TRACKER (New Feature) -->'
         end_marker = '    </section>'
@@ -147,7 +147,7 @@ def run_audit_and_fix():
         ("BOQ IQD Pricing Engine", "calcBOQTotals" in full_js and "printBOQ" in full_js),
         ("AI Redlines & Blueprint Overlays", "runAIPlanScan" in full_js and "ai-pdf-canvas" in html),
         ("PDF.js Blueprint Renderer", "pdfjsLib" in full_js or "cdnjs.cloudflare.com/ajax/libs/pdf.js" in html),
-        ("SVG Governorates Map & Heatmap", "iraq-gis-svg" in html and "selectGov" in full_js),
+        ("SVG Governorates Map & Heatmap", "iraq-leaflet-map" in html and "selectGov" in full_js),
         ("Tender Spec & DXF Exporting", "exportToDXF" in full_js and "exportTenderSpecs" in full_js)
     ]
     for name, passed in checks:
