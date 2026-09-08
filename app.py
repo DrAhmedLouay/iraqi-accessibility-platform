@@ -15,38 +15,91 @@ st.markdown("""<style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
 
 .block-container {
-    padding-top: 1rem;
-    padding-bottom: 0rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-top: 3.25rem !important;
+    padding-bottom: 0rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    max-width: 100% !important;
 }
 header[data-testid="stHeader"] {
-    background: transparent;
+    background: transparent !important;
+    height: 3rem !important;
+    z-index: 99999 !important;
+    pointer-events: none !important;
+}
+header[data-testid="stHeader"] * {
+    pointer-events: auto !important;
 }
 
+/* Hide decoration line and status widget */
+[data-testid="stDecoration"] {
+    display: none !important;
+}
+[data-testid="stStatusWidget"] {
+    display: none !important;
+}
+
+/* Move toolbar (Deploy & ⋮ menu) to the left to avoid colliding with sidebar toggle on the right */
+[data-testid="stToolbar"] {
+    left: 0.75rem !important;
+    right: auto !important;
+}
+
+/* Move Streamlit sidebar to the RIGHT side (RTL Layout) */
 [data-testid="stAppViewContainer"] {
     flex-direction: row-reverse !important;
 }
+
+/* Completely remove the ugly dividing line */
 [data-testid="stSidebar"] {
-    border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+    border: none !important;
+    border-left: none !important;
     border-right: none !important;
+    box-shadow: none !important;
     direction: rtl !important;
     text-align: right !important;
 }
+[data-testid="stSidebar"][aria-expanded="false"] {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
 [data-testid="stSidebar"], [data-testid="stSidebar"] * {
     font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     direction: rtl !important;
     text-align: right !important;
     box-sizing: border-box;
 }
+
+/* Position sidebar toggle button on the right without flipping container */
 [data-testid="stSidebarCollapsedControl"] {
     left: auto !important;
     right: 0.75rem !important;
-    transform: scaleX(-1) !important;
+    top: 0.5rem !important;
+    transform: none !important;
+    z-index: 100000 !important;
 }
 [data-testid="stSidebarCollapseButton"] {
+    transform: none !important;
+}
+
+/* Flip ONLY the arrow SVG icon inside the button, never text or tooltips */
+[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="stSidebarCollapseButton"] button svg {
     transform: scaleX(-1) !important;
 }
+
+/* Hide overflowing tooltips on the collapse controls that cause text glitches */
+[data-testid="stSidebarCollapsedControl"] [data-baseweb="tooltip"],
+[data-testid="stSidebarCollapseButton"] [data-baseweb="tooltip"] {
+    display: none !important;
+}
+
 @media (max-width: 991px) {
     [data-testid="stSidebar"] {
         right: 0 !important;
