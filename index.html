@@ -333,15 +333,15 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <nav class="flex flex-wrap items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
-        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="tab-btn px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 font-bold shadow-sm">📊 لوحة المؤشرات و GIS</button>
-        <button onclick="switchTab('calculator')" id="tab-btn-calculator" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">🧪 مختبر المحاكاة و CAD</button>
-        <button onclick="switchTab('ai-audit')" id="tab-btn-ai-audit" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">🤖 المدقق الذكي للمخططات AI</button>
-        <button onclick="switchTab('audit')" id="tab-btn-audit" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">📋 نظام التدقيق والسجل</button>
-        <button onclick="switchTab('boq')" id="tab-btn-boq" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">💰 حاسبة الكلفة والعطاءات</button>
-        <button onclick="switchTab('community')" id="tab-btn-community" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">👥 صوت المواطن والتبليغ</button>
-        <button onclick="switchTab('retrofit')" id="tab-btn-retrofit" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">🛠️ دليل المعالجات</button>
-        <button onclick="switchTab('library')" id="tab-btn-library" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">📚 المكتبة والتشريعات</button>
+      <nav class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold select-none">
+        <button type="button" onclick="switchTab('dashboard')" id="tab-btn-dashboard" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 font-bold shadow-sm">📊 لوحة المؤشرات و GIS</button>
+        <button type="button" onclick="switchTab('calculator')" id="tab-btn-calculator" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">🧪 مختبر المحاكاة و CAD</button>
+        <button type="button" onclick="switchTab('ai-audit')" id="tab-btn-ai-audit" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">🤖 المدقق الذكي للمخططات AI</button>
+        <button type="button" onclick="switchTab('audit')" id="tab-btn-audit" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">📋 نظام التدقيق والسجل</button>
+        <button type="button" onclick="switchTab('boq')" id="tab-btn-boq" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">💰 حاسبة الكلفة والعطاءات</button>
+        <button type="button" onclick="switchTab('community')" id="tab-btn-community" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">👥 صوت المواطن والتبليغ</button>
+        <button type="button" onclick="switchTab('retrofit')" id="tab-btn-retrofit" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">🛠️ دليل المعالجات</button>
+        <button type="button" onclick="switchTab('library')" id="tab-btn-library" style="cursor: pointer;" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900">📚 المكتبة والتشريعات</button>
       </nav>
     </div>
   </header>
@@ -3177,33 +3177,112 @@
       document.getElementById('speech-icon').innerText = "⏹️";
     }
 
-    // --- TAB SWITCHING ---
+    // --- GLOBAL STATE & SAFE STORAGE HELPERS ---
+    var is3DInitialized = false;
+    window.is3DInitialized = false;
+
+    function getSafeStorage(key, fallback = '[]') {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          return window.localStorage.getItem(key) || fallback;
+        }
+      } catch (e) {
+        console.warn('Storage read restricted:', e);
+      }
+      return fallback;
+    }
+
+    function setSafeStorage(key, val) {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.setItem(key, val);
+        }
+      } catch (e) {
+        console.warn('Storage write restricted:', e);
+      }
+    }
+
+    function removeSafeStorage(key) {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.removeItem(key);
+        }
+      } catch (e) {
+        console.warn('Storage remove restricted:', e);
+      }
+    }
+
+    // --- TAB SWITCHING ENGINE ---
     function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.tab-btn').forEach(el => {
-        el.className = 'tab-btn px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900';
+      if (!tabId) return;
+
+      // 1. Hide all tab sections (both class and explicit inline style)
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.add('hidden');
+        el.style.display = 'none';
       });
 
+      // 2. Reset all tab buttons
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-white', 'dark:bg-slate-900', 'text-emerald-700', 'dark:text-emerald-400', 'font-bold', 'shadow-sm');
+        el.classList.add('text-slate-600', 'dark:text-slate-300');
+        el.style.backgroundColor = '';
+        el.style.color = '';
+      });
+
+      // 3. Show target section
       const targetSection = document.getElementById(`tab-${tabId}`);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+        targetSection.style.display = 'block';
+      }
+
+      // 4. Highlight target button
       const targetBtn = document.getElementById(`tab-btn-${tabId}`);
-      if (targetSection) targetSection.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.remove('text-slate-600', 'dark:text-slate-300');
+        targetBtn.classList.add('bg-white', 'dark:bg-slate-900', 'text-emerald-700', 'dark:text-emerald-400', 'font-bold', 'shadow-sm');
+      }
+
+      // 5. Special tab handlers
       if (tabId === 'dashboard' && window.iraqMap) {
-        setTimeout(() => { window.iraqMap.invalidateSize(); }, 200);
+        setTimeout(() => {
+          try { window.iraqMap.invalidateSize(); } catch(e){}
+        }, 200);
       }
       if (tabId === 'calculator') {
         const sec = document.getElementById('calc-3d-section');
         if (sec && !sec.classList.contains('hidden')) {
-          if (!is3DInitialized) {
-            setTimeout(() => { init3DWebGLWalkthrough(); }, 150);
-          } else {
-            setTimeout(() => { on3DWindowResize(); }, 150);
+          if (typeof init3DWebGLWalkthrough === 'function') {
+            if (!window.is3DInitialized) {
+              setTimeout(() => { try { init3DWebGLWalkthrough(); } catch(e){} }, 150);
+            } else if (typeof on3DWindowResize === 'function') {
+              setTimeout(() => { try { on3DWindowResize(); } catch(e){} }, 150);
+            }
           }
         }
       }
-      if (targetBtn) {
-        targetBtn.className = 'tab-btn px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 font-bold shadow-sm';
-      }
+
+      // 6. Scroll window to top
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch(e) {}
     }
+
+    // Attach click listeners to all tab buttons directly via JS
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = ['dashboard', 'calculator', 'ai-audit', 'audit', 'boq', 'community', 'retrofit', 'library'];
+      tabs.forEach(tabId => {
+        const btn = document.getElementById(`tab-btn-${tabId}`);
+        if (btn) {
+          btn.style.cursor = 'pointer';
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(tabId);
+          });
+        }
+      });
+    });
 
         // --- ARCHITECTURAL CALCULATOR & SIMULATOR LAB (7-IN-1 MODULES) ---
     
@@ -5125,16 +5204,16 @@ ${plan.findings.map(f => `### ${f.type === 'viol' ? '[❌ مخالفة معما�
       const date = new Date().toLocaleDateString('ar-IQ');
 
       const record = { bname, bloc, btype, score, rating, date };
-      let records = JSON.parse(localStorage.getItem('iraq_accessibility_audits') || '[]');
+      let records = JSON.parse(getSafeStorage('iraq_accessibility_audits') || '[]');
       records.unshift(record);
-      localStorage.setItem('iraq_accessibility_audits', JSON.stringify(records));
+      setSafeStorage('iraq_accessibility_audits', JSON.stringify(records));
       loadSavedRecords();
       alert('✓ تم حفظ تقرير تدقيق المبنى بنجاح في السجل المحلي.');
     }
 
     function loadSavedRecords() {
       const container = document.getElementById('saved-records-list');
-      const records = JSON.parse(localStorage.getItem('iraq_accessibility_audits') || '[]');
+      const records = JSON.parse(getSafeStorage('iraq_accessibility_audits') || '[]');
 
       if (records.length === 0) {
         container.innerHTML = '<div class="text-slate-400 p-2 bg-slate-50 dark:bg-slate-900 rounded">لا توجد سجلات محفوظة حتى الآن. قم بالتدقيق واضغط "حفظ في السجل المحلي".</div>';
@@ -5154,15 +5233,15 @@ ${plan.findings.map(f => `### ${f.type === 'viol' ? '[❌ مخالفة معما�
     }
 
     function removeRecord(index) {
-      let records = JSON.parse(localStorage.getItem('iraq_accessibility_audits') || '[]');
+      let records = JSON.parse(getSafeStorage('iraq_accessibility_audits') || '[]');
       records.splice(index, 1);
-      localStorage.setItem('iraq_accessibility_audits', JSON.stringify(records));
+      setSafeStorage('iraq_accessibility_audits', JSON.stringify(records));
       loadSavedRecords();
     }
 
     function clearAuditStorage() {
       if (confirm('هل أنت متأكد من مسح جميع التقارير المحفوظة محلياً؟')) {
-        localStorage.removeItem('iraq_accessibility_audits');
+        removeSafeStorage('iraq_accessibility_audits');
         loadSavedRecords();
       }
     }
@@ -5766,7 +5845,8 @@ ${plan.findings.map(f => `### ${f.type === 'viol' ? '[❌ مخالفة معما�
     // =========================================================================
     // 🌐 TRACK 1: REALISTIC ARCHITECTURAL 3D WEBGL WALKTHROUGH (HIGH FIDELITY)
     // =========================================================================
-    let scene3D, camera3D, renderer3D, currentMeshGroup, is3DInitialized = false;
+    let scene3D, camera3D, renderer3D, currentMeshGroup;
+    is3DInitialized = false;
     let show3DWalls = true, show3DDimensions = true, show3DWheelchair = true, current3DType = 'restroom';
     let isMouseDown = false, mouseX = 0, mouseY = 0, rotX = 0.45, rotY = -0.6, targetZoom = 6.8;
     let isAutoTour = false, panX = 0, panY = 0.6, panZ = 0;

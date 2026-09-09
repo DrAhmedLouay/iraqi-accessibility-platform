@@ -15,7 +15,7 @@ st.markdown("""<style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
 
 .block-container {
-    padding-top: 3.25rem !important;
+    padding-top: 0.25rem !important;
     padding-bottom: 0rem !important;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
@@ -23,11 +23,20 @@ st.markdown("""<style>
 }
 header[data-testid="stHeader"] {
     background: transparent !important;
-    height: 3rem !important;
-    z-index: 99999 !important;
+    height: 0px !important;
+    min-height: 0px !important;
+    max-height: 0px !important;
+    overflow: visible !important;
     pointer-events: none !important;
+    z-index: 9999 !important;
 }
 header[data-testid="stHeader"] * {
+    pointer-events: none !important;
+}
+[data-testid="stToolbar"],
+[data-testid="stToolbar"] *,
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="stSidebarCollapsedControl"] * {
     pointer-events: auto !important;
 }
 
@@ -339,6 +348,29 @@ header[data-testid="stHeader"] * {
 # Sidebar with platform information, credits, and document downloads
 current_dir = os.path.dirname(os.path.abspath(__file__))
 with st.sidebar:
+    st.markdown('''<div class="sidebar-section-title" style="margin-top: 4px; margin-bottom: 8px;">
+<div class="section-title-text"><span>🧭</span><span>الانتقال السريع بين الأقسام:</span></div>
+</div>''', unsafe_allow_html=True)
+
+    tab_options = {
+        "dashboard": "📊 1. لوحة المؤشرات وخارطة GIS",
+        "calculator": "🧪 2. مختبر المحاكاة و CAD (المجسم 3D)",
+        "ai-audit": "🤖 3. المدقق الذكي للمخططات AI",
+        "audit": "📋 4. نظام التدقيق والسجل والشهادات",
+        "boq": "💰 5. حاسبة الكلفة والعطاءات (BOQ)",
+        "community": "👥 6. صوت المواطن والتبليغ الميداني GPS",
+        "retrofit": "🛠️ 7. دليل المعالجات الهندسية",
+        "library": "📚 8. المكتبة الرقمية والتشريعات"
+    }
+
+    selected_tab = st.selectbox(
+        "اختر القسم المطلوب لعرضه:",
+        options=list(tab_options.keys()),
+        format_func=lambda k: tab_options[k],
+        index=0,
+        label_visibility="collapsed"
+    )
+
     logo_path = os.path.join(current_dir, "platform_logo.png")
     if not os.path.exists(logo_path):
         logo_path = os.path.join(current_dir, "platform_logo.jpg")
@@ -467,6 +499,20 @@ html_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "iraqi_acce
 if os.path.exists(html_path):
     with open(html_path, "r", encoding="utf-8") as f:
         html_content = f.read()
-    components.html(html_content, height=1250, scrolling=True)
+
+    # If user selected a tab from sidebar other than dashboard, inject quick-switch
+    if 'selected_tab' in locals() and selected_tab != 'dashboard':
+        tab_inject = f'''<script>
+window.addEventListener("DOMContentLoaded", function() {{
+    setTimeout(function() {{
+        if (typeof switchTab === "function") {{
+            switchTab("{selected_tab}");
+        }}
+    }}, 120);
+}});
+</script></body>'''
+        html_content = html_content.replace('</body>', tab_inject)
+
+    components.html(html_content, height=1350, scrolling=True)
 else:
     st.error("تعذر العثور على ملف المنصة التفاعلية iraqi_accessibility_platform.html")
