@@ -375,7 +375,7 @@ with st.sidebar:
 <div class="feature-icon-wrapper icon-purple">🧪</div>
 <div class="feature-body">
 <div class="feature-name">مختبر المحاكاة الهندسية</div>
-<div class="feature-meta"><span class="badge-tag tag-purple">7 محاكيات معمارية وتصدير CAD</span></div>
+<div class="feature-meta"><span class="badge-tag tag-purple">10 محاكيات معمارية وتصدير CAD</span></div>
 </div>
 </div>
 <div class="sidebar-feature-card">

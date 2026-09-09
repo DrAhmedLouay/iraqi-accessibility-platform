@@ -115,7 +115,7 @@ def run_audit_and_fix():
             print(f"❌ Missing Tab [{tab}]!")
             return False
 
-    # 7. Audit 7 Universal Design Lab Simulators
+    # 7. Audit 10 Universal Design Lab Simulators
     required_simulators = [
         'calc-sec-ramps',
         'calc-sec-restroom',
@@ -123,9 +123,12 @@ def run_audit_and_fix():
         'calc-sec-doors',
         'calc-sec-elevators',
         'calc-sec-curb',
-        'calc-sec-reach'
+        'calc-sec-reach',
+        'calc-sec-rescue',
+        'calc-sec-stairs',
+        'calc-sec-theater'
     ]
-    print(f"\n--- SIMULATORS AUDIT (Universal Design Lab) ---")
+    print(f"\n--- SIMULATORS AUDIT (Universal Design Lab: 10 Tools) ---")
     for sim in required_simulators:
         if f'id="{sim}"' in html:
             print(f"✓ Simulator [{sim}] is active.")
@@ -138,6 +141,15 @@ def run_audit_and_fix():
     checks = [
         ("Iraqi Building Code 202 references", "م.ب.ع 202" in html or "Code 202" in html),
         ("ADA Standards 2010 references", "ADA 2010" in html or "ADA Standards" in html),
+        ("Ramp Slope 1:12 / 1:16 / 1:20", "1:12" in html and "1:16" in html),
+        ("Clear Restroom Turning Circle 150cm", "150" in html),
+        ("Accessible Parking Ratios (ADA 208.2)", "240" in html),
+        ("Door clear width 90cm", "90" in html),
+        ("Elevator clear cabin 140x110cm", "140" in html),
+        ("Curb ramp & Reach ranges", "runCurbCalc" in html and "runReachCalc" in html),
+        ("Emergency Rescue Refuge Areas (76x122cm)", "runRescueCalc" in html and "76" in html),
+        ("Stair Comfort Formula (2R+T=60-64cm)", "runStairsCalc" in html and "2R" in html),
+        ("Auditorium Seating Table 221.2", "runTheaterCalc" in html and "theater-svg" in html),
         ("Ramp Slope 1:12 / 1:16 / 1:20", "1:12" in html and "1:16" in html and "1:20" in html),
         ("Clear Restroom Turning Circle 150cm", "150" in html and "restroom" in html),
         ("Accessible Parking Ratios (ADA 208.2)", "runParkingCalc" in full_js),
