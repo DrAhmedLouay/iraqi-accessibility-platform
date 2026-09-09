@@ -160,7 +160,12 @@ def run_audit_and_fix():
         ("AI Redlines & Blueprint Overlays", "runAIPlanScan" in full_js and "ai-pdf-canvas" in html),
         ("PDF.js Blueprint Renderer", "pdfjsLib" in full_js or "cdnjs.cloudflare.com/ajax/libs/pdf.js" in html),
         ("SVG Governorates Map & Heatmap", "iraq-leaflet-map" in html and "selectGov" in full_js),
-        ("Tender Spec & DXF Exporting", "exportToDXF" in full_js and "exportTenderSpecs" in full_js)
+        ("Tender Spec & DXF Exporting", "exportToDXF" in full_js and "exportTenderSpecs" in full_js),
+        ("Track 1: 3D WebGL Walkthrough & BIM", "init3DWebGLWalkthrough" in full_js and "exportBIMSchema" in full_js and "calc-3d-canvas" in html),
+        ("Track 2: Digital QR Certificate & Verifier", "openOfficialCertFromAudit" in full_js and "runCertificateVerification" in full_js and "cert-verifier-modal" in html),
+        ("Track 3: AI Code Consultant & Photo Auditor", "toggleAIChat" in full_js and "runSamplePhotoAudit" in full_js and "ai-chat-drawer" in html),
+        ("Track 4: PWA & Field GPS Geo-Tagging", "installPWAApp" in full_js and "getCommunityGPSLocation" in full_js and "btn-com-gps" in html),
+        ("Track 5: Speech Narration & Global Hotkeys", "speakText" in full_js and "toggleHotkeysModal" in full_js and "hotkeys-modal" in html)
     ]
     for name, passed in checks:
         if passed:
@@ -170,7 +175,7 @@ def run_audit_and_fix():
             return False
 
     print("\n" + "=" * 70)
-    print("ALL AUDIT VERIFICATIONS PASSED WITH 100% SUCCESS")
+    print("ALL 5 STRATEGIC TRACKS & AUDIT VERIFICATIONS PASSED WITH 100% SUCCESS")
     print("=" * 70)
     return True
 

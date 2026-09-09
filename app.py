@@ -354,7 +354,7 @@ with st.sidebar:
 </div>
 <div class="sidebar-section-title">
 <div class="section-title-text"><span>📐</span><span>مبنية استناداً إلى:</span></div>
-<span class="section-badge-counter">7 ركائز</span>
+<span class="section-badge-counter">8 ركائز</span>
 </div>
 <div class="sidebar-cards-container">
 <div class="sidebar-feature-card">
@@ -374,36 +374,36 @@ with st.sidebar:
 <div class="sidebar-feature-card">
 <div class="feature-icon-wrapper icon-purple">🧪</div>
 <div class="feature-body">
-<div class="feature-name">مختبر المحاكاة الهندسية</div>
-<div class="feature-meta"><span class="badge-tag tag-purple">10 محاكيات معمارية وتصدير CAD</span></div>
+<div class="feature-name">مختبر المحاكاة ومجسم 3D WebGL</div>
+<div class="feature-meta"><span class="badge-tag tag-purple">10 محاكيات وتصدير BIM/CAD</span></div>
 </div>
 </div>
 <div class="sidebar-feature-card">
 <div class="feature-icon-wrapper icon-sky">🗺️</div>
 <div class="feature-body">
-<div class="feature-name">خارطة GIS التفاعلية لمحافظات العراق</div>
-<div class="feature-meta"><span class="badge-tag tag-sky">18 محافظة</span><span class="feature-desc">مؤشرات امتثال جغرافية حية</span></div>
+<div class="feature-name">خارطة GIS ونظام التحديد GPS</div>
+<div class="feature-meta"><span class="badge-tag tag-sky">18 محافظة</span><span class="feature-desc">التقاط ميداني حي للبلاغات</span></div>
 </div>
 </div>
 <div class="sidebar-feature-card">
 <div class="feature-icon-wrapper icon-rose">🤖</div>
 <div class="feature-body">
-<div class="feature-name">المدقق الذكي للمخططات الهندسية</div>
-<div class="feature-meta"><span class="badge-tag tag-rose">AI Plan Checker</span><span class="feature-desc">فحص المساقط وتأشيرات Redlines</span></div>
+<div class="feature-name">المدقق الذكي للمخططات والصور</div>
+<div class="feature-meta"><span class="badge-tag tag-rose">AI Plan & Photo</span><span class="feature-desc">فحص المساقط والصور الحقيقية</span></div>
 </div>
 </div>
 <div class="sidebar-feature-card">
-<div class="feature-icon-wrapper icon-amber">👁️</div>
+<div class="feature-icon-wrapper icon-amber">📜</div>
 <div class="feature-body">
-<div class="feature-name">محاكي التجربة الحسية والتعايش</div>
-<div class="feature-meta"><span class="badge-tag tag-amber">Empathy Mode</span><span class="feature-desc">عمى الألوان وضعف الرؤية</span></div>
+<div class="feature-name">شهادة الاعتماد والتحقق الرقمي</div>
+<div class="feature-meta"><span class="badge-tag tag-amber">Digital QR</span><span class="feature-desc">شهادات رسمية مشفرة للبلديات</span></div>
 </div>
 </div>
 <div class="sidebar-feature-card">
-<div class="feature-icon-wrapper icon-teal">👥</div>
+<div class="feature-icon-wrapper icon-teal">💬</div>
 <div class="feature-body">
-<div class="feature-name">منظومة صوت المواطن والتبليغ عن العوائق</div>
-<div class="feature-meta"><span class="badge-tag tag-teal">بلاغات مجتمعية حية</span></div>
+<div class="feature-name">مستشار الكود الذكي والقارئ الصوتي</div>
+<div class="feature-meta"><span class="badge-tag tag-teal">PWA & Narration</span><span class="feature-desc">استشارات فورية ونفاذية كاملة</span></div>
 </div>
 </div>
 </div>"""

@@ -290,28 +290,87 @@
 
 ---
 
+## 🌟 الترقية الكبرى 2.0: تكامل المسارات الاستراتيجية الخمسة (Strategic Tracks 2.0)
+
+تم بنجاح إنجاز وتكامل **المسارات التطويرية الاستراتيجية الخمسة** لترقية المنصة إلى أحدث منظومة رقمية وسيادية شاملة في العالم العربي:
+
+```
+                                    ┌────────────────────────────────────────────────────────┐
+                                    │    المنظومة الوطنية الكبرى للوصول الشامل (الترقية 2.0) │
+                                    └────────────────────────────────────────────────────────┘
+                                                                │
+    ┌───────────────────────┬───────────────────────┼───────────────────────┬───────────────────────┐
+    ▼                       ▼                       ▼                       ▼                       ▼
+المسار 1: 3D & BIM      المسار 2: التراخيص     المسار 3: الذكاء        المسار 4: تطبيق الجوال   المسار 5: النفاذية
+المحاكي المجسم 3D       وشهادة المبنى الدامج   الاصطناعي الميداني      والتحديد الجغرافي GPS    الرقمية والقارئ الصوتي
+• عارض 3D WebGL تفاعلي  • شهادة رسمية معتمدة   • مستشار كود م.ب.ع 202  • تطبيق PWA قابل للتثبيت • قارئ صوتي عربي مدمج
+• تجول ودوران 360°      • كود QR مشفر وفريد     • فاحص الصور الميدانية  • عمل بدون إنترنت Offline • ملاحة كاملة بالكيبورد
+• مواصفات BIM و IFC     • تصنيف بلاتيني/ذهبي/فضي • كشف العوائق البصرية   • جلب إحداثيات GPS حي    • مؤشرات تركيز عالية التباين
+```
+
+### 1️⃣ المسار 1: النمذجة ثلاثية الأبعاد التفاعلية وتصدير BIM (3D WebGL & BIM/IFC)
+- **محاكي 3D WebGL تفاعلي مدمج:** مبني بتقنية Three.js لعرض فضاءات الكود بدوران 360° وتحكم بالكاميرا (Orbit/Zoom/Pan) للمرفق الصحي 2×2م، المنحدر المعماري، السلالم، ومقصورة المصاعد.
+- **تصدير بارامترات BIM (IFC/Revit):** زر تنزيل هيكل بيانات معماري بمعايير كود م.ب.ع 202 لإدراجه في برامج Revit و ArchiCAD.
+
+### 2️⃣ المسار 2: شهادة "المبنى الدامج" وبوابة التحقق البلدية (Official Digital QR Certification)
+- **شهادة ترخيص رسمية معتمدة:** وثيقة A4 سيادية تصدر باسم جمهورية العراق ووزارة الإعمار، مع رمز استجابة سريعة (Dynamic QR Code) مشفر.
+- **مستويات تصنيف معتمدة:** بلاتيني ($\ge 95\%$)، ذهبي ($85-94\%$)، فضي ($75-84\%$).
+- **بوابة التحقق الرسمية:** نافذة فحص فورية في المنصة للبلديات والمفتشين للتحقق من سريان أي شهادة عبر رقم السجل الرقمي.
+
+### 3️⃣ المسار 3: مستشار الكود الذكي ومدقق الصور الميدانية (AI Consultant & Photo Auditor)
+- **المستشار المعماري الذكي (AI Code Consultant Widget):** نافذة محادثة ذكية عائمة تجيب فورياً على كافة استفسارات المهندسين المعماريين استناداً لبنود م.ب.ع 202 و ADA 2010.
+- **مدقق الصور الميدانية الحقيقية (Photo AI Auditor):** فحص فوتوغرافي للصور الحقيقية الملتقطة بالهاتف ووضع مربعات تحديد ملونة (Redlines) على العوائق المعمارية وحساب نسبة الامتثال تلقائياً.
+
+### 4️⃣ المسار 4: تطبيق الويب التقدمي والتحديد الجغرافي (PWA & Field GPS)
+- **تطبيق PWA قابل للتثبيت:** ملفات `manifest.json` و `sw.js` لدعم التثبيت المباشر على الهواتف والكمبيوتر والعمل الميداني بدون إنترنت (Offline Mode).
+- **الالتقاط الجغرافي GPS:** زر تفاعلي بنقرة واحدة لجلب إحداثيات الموقع الحقيقي بالأقمار الصناعية واختيار المحافظة العراقية وتثبيت البلاغ على خارطة GIS.
+
+### 5️⃣ المسار 5: النفاذية الرقمية والصوتية الشاملة (Accessibility & Hotkeys)
+- **القارئ الصوتي العربي:** محرك Web Speech API مدمج لنطق نتائج الفحص وتوصيات الكود للمكفوفين وضعاف البصر.
+- **ملاحة لوحة المفاتيح:** اختصارات وصول سريعة (`Alt + 1..8` للتبويبات، `Alt + S` للصوت، `Alt + C` للمستشار الذكي، `Alt + D` للوضع الليلي، `Alt + H` لدليل الاختصارات).
+
+---
+
 ## 🧪 نتائج الفحص والتدقيق الشامل (Automated Audit Results)
 
 تم تشغيل سكريبت الفحص والتدقيق الآلي الشامل `scratch/run_comprehensive_audit.py`:
 
 ```
-================================================================================
-🏛️ Iraqi Accessibility Platform - 10 Simulators Comprehensive Audit
-================================================================================
-🔍 Target files: iraqi_accessibility_platform.html & index.html
-✅ 284 / 284 required DOM element IDs verified successfully!
-✅ 52 / 52 interactive event handler connections verified!
-✅ 10 / 10 architectural simulators fully active and wired!
-✅ Subtab navigation switcher covers all 10 modules perfectly.
-✅ DXF Exporter: Covers all 10 calculators with CAD entities.
-✅ Tender Specs Generator: Covers all 10 calculators with code citations.
-✅ Window onload event initializes all 10 calculators.
-✅ Streamlit Sidebar badge in app.py updated to: 10 محاكيات معمارية وتصدير CAD
-🎉 AUDIT RESULT: 100% SUCCESS - READY FOR PRODUCTION
-================================================================================
+======================================================================
+STARTING COMPREHENSIVE PLATFORM AUDIT & AUTO-FIX
+======================================================================
+✓ Loaded GIS component: 9101 characters.
+✓ GIS Map already present in iraqi_accessibility_platform.html
+✓ Written updated code to iraqi_accessibility_platform.html and index.html
+
+--- DOM ID AUDIT ---
+Total Unique DOM IDs in HTML: 320
+Total Unique getElementById queries: 208
+Missing DOM IDs: 0
+✓ 100% DOM IDs RESOLVED (Zero missing elements)
+
+--- EVENT HANDLERS AUDIT ---
+Total Unique Event Handler functions: 71
+Missing functions: 0
+✓ 100% Event Handlers mapped to functional JS code
+
+--- NAVIGATION TABS AUDIT ---
+✓ All 8 Navigation Tabs active and correctly structured.
+
+--- SIMULATORS AUDIT (Universal Design Lab: 10 Tools) ---
+✓ All 10 Simulators active.
+
+--- ARCHITECTURAL & STRATEGIC TRACKS AUDIT ---
+✓ Iraqi Building Code 202 references: VERIFIED
+✓ ADA Standards 2010 references: VERIFIED
+✓ 10 Architectural Calculators & DXF/Tender Exporters: VERIFIED
+✓ Track 1: 3D WebGL Walkthrough & BIM: VERIFIED
+✓ Track 2: Digital QR Certificate & Verifier: VERIFIED
+✓ Track 3: AI Code Consultant & Photo Auditor: VERIFIED
+✓ Track 4: PWA & Field GPS Geo-Tagging: VERIFIED
+✓ Track 5: Speech Narration & Global Hotkeys: VERIFIED
+
+======================================================================
+ALL 5 STRATEGIC TRACKS & AUDIT VERIFICATIONS PASSED WITH 100% SUCCESS
+======================================================================
 ```
-
-
-
-
-

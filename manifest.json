@@ -1,0 +1,26 @@
+{
+  "name": "منصة كود الوصول الشامل والتصميم الدامج - جمهورية العراق",
+  "short_name": "الوصول الشامل",
+  "description": "المرجع الهندسي والرقابي الوطني العراقي لكود متطلبات المعاقين م.ب.ع 202 والمعايير الدولية ADA 2010",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f766e",
+  "orientation": "any",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "platform_logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "platform_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
